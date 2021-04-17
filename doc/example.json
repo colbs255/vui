@@ -2,7 +2,7 @@
     "name": "SampleCLI",
     "description": "Get data from website in specific region of world",
     "command": "java -jar ~/SampleCLI.jar",
-    "args-order": ["src", "region", "start", "binary"],
+    "args-order": ["src", "region", "startTime", "binary"],
     "args": {
         "src": {
             "type": "string",
@@ -10,7 +10,12 @@
         },
         "region": {
             "type": "string",
-            "values": ["US", "EU", "ASIA"]
+            "values": ["US", "EU", "ASIA"],
+            "default": "US"
+        },
+        "startTime": {
+            "type": "string",
+            "values": ["2020-04-01"]
         },
         "binary": {
             "type": "boolean"
