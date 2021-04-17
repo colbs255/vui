@@ -47,25 +47,28 @@ endfunction
 " Parse Buffer
 """""""""""""""""""""""""""""""""""""""""""
 function OutputCommandFromVUIBuffer(vui_config)
+    echom GenerateCommand(ParseVUIBufferArgs(a:vui_config), a:vui_config)
 endfunction
 
 function ParseVUIBufferArgs(vui_config)
     let s:args_dict = {}
     " use search to go through buffer for matches
     call cursor(line('^'), 0)
-    let s:pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*"
+    let s:pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
+    " (word at beginning of line) followed by colon followed by 1 or more whitespace
+    " (followed by any characters) excluding trailing whitespace
     while search(s:pattern, 'W')
         let s:line = getline('.')
-        " let s:matchList = matchlist(s:line, )
-        echom s:line
+        let s:match_list = matchlist(s:line, s:pattern)
+        let s:arg_name = s:match_list[1]
+        let s:arg_value = s:match_list[2]
+        let s:args_dict[s:arg_name] = s:arg_value
     endwhile
-
-    " when match found, read the key and value from it with read line
-    " then use match list
+    return s:args_dict
 endfunction
 
 function GenerateCommand(args_dict, vui_config)
-    let s:components = []
+    let s:components = [a:vui_config['command']]
     let s:prefix = "--"
     let s:config_args = a:vui_config['args']
     for [k,v] in items(a:args_dict)
@@ -79,16 +82,16 @@ function GenerateCommand(args_dict, vui_config)
 
         if s:arg_type == 'boolean'
             if v == s:enabled_keyword
-                add(s:components, s:prefix . k)
+                call add(s:components, s:prefix . k)
             endif
         elseif s:arg_type == 'string'
-            add(s:components, s:prefix . k . ' ' v)
+            call add(s:components, s:prefix . k . ' ' . v)
         else
             echo 'Invalid type for ' . k . ' defaulting to string'
-            add(s:components, s:prefix . k . ' ' v)
+            call add(s:components, s:prefix . k . ' ' . v)
         endif
     endfor
-    return join(s:completion, " ")    
+    return join(s:components, " ")    
 endfunction
 
 function AppendLast(text)

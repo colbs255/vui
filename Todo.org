@@ -9,14 +9,14 @@
   + [X] Output eac arg
   + [X] output default value for each arg
   + [ ] default for boolean type
-- [ ] Generate Command from buffer
-  + [ ] ignore header
-  + [ ] parse all args in buffer
-  + [ ] different logic for boolean vs string
-    + [ ] boolean - check if enabled(write in command) or disabled (dont write)
-    + [ ] string  - first check if disabled
-  + [ ] put all args together into 1 command
-  + [ ] output the command
+- [-] Generate Command from buffer
+  + [X] ignore header
+  + [X] parse all args in buffer
+  + [X] different logic for boolean vs string
+    + [X] boolean - check if enabled(write in command) or disabled (dont write)
+    + [X] string  - first check if disabled
+  + [X] put all args together into 1 command
+  + [X] output the command
   + [ ] custom formatting for final arg output
 - [ ] Allow user to edit buffer
   + [ ] tab switching
