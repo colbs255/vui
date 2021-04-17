@@ -1,0 +1,33 @@
+#+TITLE: Todo
+
+* Core Features
+** [ ] Plugin Component
+- [ ] command to actually enter the mode
+- [ ] detect filetye
+** [ ] Read from config file
+- [X] JSON decoder
+- [ ] validation?
+** [ ] Output dictionary
+- [ ] Output header info
+- [ ] Output each arg
+- [ ] output default value for each arg
+** [ ] Allow user to edit buffer
+- [ ] tab switching
+  - [ ] `:h :command-completion-custom`
+- [ ] tab completion
+** [ ] Generate Command from buffer
+- [ ] ignore header
+- [ ] parse all args in buffer
+- [ ] different logic for boolean vs string
+  - [ ] boolean - check if enabled(write in command) or disabled (dont write)
+  - [ ] string  - first check if disabled
+- [ ] put all args together into 1 command
+- [ ] output the command
+
+
+* Extra Features
+- [ ] syntax highlighting enabled and disabled
+- [ ] put command directly in commandline
+- [ ] Tab to move to next option
+- [ ] Tab to autocomplete
+- [ ] value generator like TODAY - 1

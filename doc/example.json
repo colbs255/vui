@@ -1,0 +1,19 @@
+{
+    "name": "SampleCLI",
+    "description": "Get data from website in specific region of world",
+    "command": "java -jar ~/SampleCLI.jar",
+    "args-order": ["src", "region", "start", "binary"],
+    "args": {
+        "src": {
+            "type": "string",
+            "values": ["www.google.com", "www.apple.com"]
+        },
+        "region": {
+            "type": "string",
+            "values": ["US", "EU", "ASIA"]
+        },
+        "binary": {
+            "type": "boolean"
+        }
+    }
+}
