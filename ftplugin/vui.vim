@@ -5,8 +5,8 @@ let s:enabled_keyword = '_enabled_'
 " Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
 function LoadVUIConfig(file)
-    let s:file_text = join(readfile(a:file))
-    return json_decode(s:file_text)
+    let l:file_text = join(readfile(a:file))
+    return json_decode(l:file_text)
 endfunction
 
 function PrintVUIBuffer(vui_config)
@@ -17,11 +17,11 @@ function PrintVUIBuffer(vui_config)
 endfunction
 
 function PrintVUIBufferHeader(vui_config)
-    let s:config_name = get(a:vui_config, 'name', 'No name defined')
-    let s:description = get(a:vui_config, 'description', 'No description defined')
-    let s:header_lines = [s:description, '']
-    call append(line('^'), s:config_name)
-    call AppendLast(s:header_lines)
+    let l:config_name = get(a:vui_config, 'name', 'No name defined')
+    let l:description = get(a:vui_config, 'description', 'No description defined')
+    let l:header_lines = [l:description, '']
+    call append(line('^'), l:config_name)
+    call AppendLast(l:header_lines)
 endfunction
 
 function PrintVUIBufferArgs(vui_config)
@@ -31,16 +31,27 @@ function PrintVUIBufferArgs(vui_config)
     endif
 
     call AppendLast('=Args=')
-    let s:arg_names = get(a:vui_config, 'args-order', keys(a:vui_config['args']))
-    for arg in s:arg_names
+    let l:arg_names = get(a:vui_config, 'args-order', keys(a:vui_config['args']))
+    for arg in l:arg_names
         if !has_key(a:vui_config['args'], arg)
             echo "No config defined for " . arg
             continue
         endif
-        let s:arg_node = a:vui_config['args'][arg]
-        let s:arg_value = get(s:arg_node, 'default', s:disabled_keyword)
-        call AppendLast(arg . ': '  . s:arg_value)
+        let l:arg_node = a:vui_config['args'][arg]
+        let l:arg_value = get(l:arg_node, 'default', s:disabled_keyword)
+        call AppendLast(arg . ': '  . l:arg_value)
     endfor
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Editing Buffer
+"""""""""""""""""""""""""""""""""""""""""""
+function ArgValueCompletion(findstart, base)
+    if a:findstart
+        return col('.')
+    endif
+
+    return ['red', 'blue', 'green']
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -51,47 +62,47 @@ function OutputCommandFromVUIBuffer(vui_config)
 endfunction
 
 function ParseVUIBufferArgs(vui_config)
-    let s:args_dict = {}
+    let l:args_dict = {}
     " use search to go through buffer for matches
-    call cursor(line('^'), 0)
-    let s:pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
+    call cursor(1,1)
+    let l:pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
     " (word at beginning of line) followed by colon followed by 1 or more whitespace
     " (followed by any characters) excluding trailing whitespace
-    while search(s:pattern, 'W')
-        let s:line = getline('.')
-        let s:match_list = matchlist(s:line, s:pattern)
-        let s:arg_name = s:match_list[1]
-        let s:arg_value = s:match_list[2]
-        let s:args_dict[s:arg_name] = s:arg_value
+    while search(l:pattern, 'W')
+        let l:line = getline('.')
+        let l:match_list = matchlist(l:line, l:pattern)
+        let l:arg_name = l:match_list[1]
+        let l:arg_value = l:match_list[2]
+        let l:args_dict[l:arg_name] = l:arg_value
     endwhile
-    return s:args_dict
+    return l:args_dict
 endfunction
 
 function GenerateCommand(args_dict, vui_config)
-    let s:components = [a:vui_config['command']]
-    let s:prefix = "--"
-    let s:config_args = a:vui_config['args']
+    let l:components = [a:vui_config['command']]
+    let l:prefix = "--"
+    let l:config_args = a:vui_config['args']
     for [k,v] in items(a:args_dict)
-        if !has_key(s:config_args, k)
+        if !has_key(l:config_args, k)
             echo "No config defined for " . k
             continue
         endif
 
-        let s:arg_node = s:config_args[k]
-        let s:arg_type = get(s:arg_node, 'type', 'string')
+        let l:arg_node = l:config_args[k]
+        let l:arg_type = get(l:arg_node, 'type', 'string')
 
-        if s:arg_type == 'boolean'
+        if l:arg_type == 'boolean'
             if v == s:enabled_keyword
-                call add(s:components, s:prefix . k)
+                call add(l:components, l:prefix . k)
             endif
-        elseif s:arg_type == 'string'
-            call add(s:components, s:prefix . k . ' ' . v)
+        elseif l:arg_type == 'string'
+            call add(l:components, l:prefix . k . ' ' . v)
         else
             echo 'Invalid type for ' . k . ' defaulting to string'
-            call add(s:components, s:prefix . k . ' ' . v)
+            call add(l:components, l:prefix . k . ' ' . v)
         endif
     endfor
-    return join(s:components, " ")    
+    return join(l:components, " ")    
 endfunction
 
 function AppendLast(text)
