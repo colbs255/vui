@@ -1,5 +1,6 @@
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
+let s:arg_pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
 
 """""""""""""""""""""""""""""""""""""""""""
 " Create Buffer
@@ -51,7 +52,29 @@ function ArgValueCompletion(findstart, base)
         return col('.')
     endif
 
-    return ['red', 'blue', 'green']
+    let l:arg_pair = GetArgProperyFromLine()
+    if empty(l:arg_pair)
+        return []
+    endif
+
+    let l:config_args = get(s:vui_config, 'args', [])
+    if empty(l:config_args)
+        return []
+    endif
+
+    if !has_key(l:config_args, l:arg_pair[0])
+        return []
+    endif
+    let l:arg_node = l:config_args[l:arg_pair[0]]
+
+    let l:arg_type = get(l:arg_node, 'type', 'string')
+    if l:arg_type == 'boolean'
+        return [s:enabled_keyword, s:disabled_keyword]
+    endif
+    
+    " let l:completion_list = get(l:arg_node, 'values', [])
+    return add(get(l:arg_node, 'values', []), s:disabled_keyword)
+
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -65,15 +88,11 @@ function ParseVUIBufferArgs(vui_config)
     let l:args_dict = {}
     " use search to go through buffer for matches
     call cursor(1,1)
-    let l:pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
     " (word at beginning of line) followed by colon followed by 1 or more whitespace
     " (followed by any characters) excluding trailing whitespace
-    while search(l:pattern, 'W')
-        let l:line = getline('.')
-        let l:match_list = matchlist(l:line, l:pattern)
-        let l:arg_name = l:match_list[1]
-        let l:arg_value = l:match_list[2]
-        let l:args_dict[l:arg_name] = l:arg_value
+    while search(s:arg_pattern, 'W')
+        let l:arg_pair = GetArgProperyFromLine()
+        let l:args_dict[l:arg_pair[0]] = l:arg_pair[1]
     endwhile
     return l:args_dict
 endfunction
@@ -96,8 +115,11 @@ function GenerateCommand(args_dict, vui_config)
                 call add(l:components, l:prefix . k)
             endif
         elseif l:arg_type == 'string'
-            call add(l:components, l:prefix . k . ' ' . v)
+            if v != s:disabled_keyword
+                call add(l:components, l:prefix . k . ' ' . v)
+            endif
         else
+            " TODO clean this part up
             echo 'Invalid type for ' . k . ' defaulting to string'
             call add(l:components, l:prefix . k . ' ' . v)
         endif
@@ -105,9 +127,29 @@ function GenerateCommand(args_dict, vui_config)
     return join(l:components, " ")    
 endfunction
 
+"""""""""""""""""""""""""""""""""""""""""""
+" Utils
+"""""""""""""""""""""""""""""""""""""""""""
 function AppendLast(text)
     call append(line('$'), a:text)
 endfunction
 
-let g:vui_config = LoadVUIConfig(glob('~/Desktop/CurrentProjects/vui/doc/example.json'))
-call PrintVUIBuffer(g:vui_config)
+function GetArgProperyFromLine()
+    " Return list with first elem being p-name and second being p-value
+    " If match not successful then empty list returned
+    let l:line = getline('.')
+    let l:match_list = matchlist(l:line, s:arg_pattern)
+    if empty(l:match_list)
+        return []
+    endif
+
+    return [l:match_list[1], l:match_list[2]]
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Settings
+"""""""""""""""""""""""""""""""""""""""""""
+let g:vui_config_file = glob('~/Desktop/CurrentProjects/vui/doc/example.json')
+let s:vui_config = LoadVUIConfig(g:vui_config_file)
+call PrintVUIBuffer(s:vui_config)
+setlocal completefunc=ArgValueCompletion

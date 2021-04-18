@@ -18,15 +18,22 @@
   + [X] put all args together into 1 command
   + [X] output the command
   + [ ] custom formatting for final arg output
-- [ ] Allow user to edit buffer
-  + [ ] tab switching
-    + [ ] `:h :command-completion-custom`
-  + [ ] tab completion
+  + [ ] if string has disabled keyword dont include
+- [-] Allow user to edit buffer
+  - [X] basic autocomplete
+  - [ ] use tabs
+  - [ ] get correct index
+  - [ ] actually do pattern matching
 - [ ] Plugin Component
   + [ ] command to actually enter the mode
+  + [ ] correct way to do plugin completion
   + [ ] detect filetye
+  + [ ] fix the global thing of the vui config var
 * Extra Features
-- [ ] syntax highlighting enabled and disabled
+- [ ] syntax highlighting
+  - [ ] enabled
+  - [ ] disabled
+  - [ ] prod
 - [ ] put command directly in commandline
 - [ ] Tab to move to next option
 - [ ] Tab to autocomplete
