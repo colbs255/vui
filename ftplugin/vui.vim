@@ -185,6 +185,10 @@ function VUIExecuteCommandAndReadOuput()
     execute 'read !' . command
 endfunction
 
+command -buffer VUIOutputCommand :call VUIOutputCommand()
+command -buffer VUIExecuteCommand :call VUIExecuteCommand()
+command -buffer VUIExecuteCommandAndReadOuput :call VUIExecuteCommandAndReadOuput()
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Settings
 """""""""""""""""""""""""""""""""""""""""""
