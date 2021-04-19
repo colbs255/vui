@@ -46,7 +46,7 @@ function s:PrintVUIBufferHeader(vui_config)
     let config_name = get(a:vui_config, 'name', 'No name defined')
     let description = get(a:vui_config, 'description', 'No description defined')
     let header_lines = [description, '']
-    call append(line('^'), config_name)
+    call append(line('^'), '=' . config_name . '=')
     call s:AppendLast(header_lines)
 endfunction
 

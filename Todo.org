@@ -21,13 +21,15 @@
   - [X] basic autocomplete
   - [X] actually do pattern matching
   - [X] it wont autocomplete for second time? stateful
-- [ ] Plugin Component
-  + [ ] command to actually enter the mode
-  + [ ] correct way to do plugin completion
-  + [ ] detect filetye
-  + [ ] set the config file somewhere
-  + [ ] fix the global thing of the vui config var
+- [X] Plugin Component
+  + [X] command to actually enter the mode
+  + [X] correct way to do plugin completion
+  + [X] detect filetye
+  + [X] set the config file somewhere
+  + [X] fix the global thing of the vui config var
+- [ ] Work with more than 1 CLI
 * Extra Features
+- [ ] fix the s:config var (buffer)
 - [ ] no autocomplete flag?
 - [ ] default for boolean type
 - [ ] use tabs
