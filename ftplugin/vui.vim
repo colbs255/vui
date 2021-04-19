@@ -3,7 +3,26 @@ let s:enabled_keyword = '_enabled_'
 let s:arg_pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
 
 """""""""""""""""""""""""""""""""""""""""""
-" Create Buffer
+" Section: Utils
+"""""""""""""""""""""""""""""""""""""""""""
+function AppendLast(text)
+    call append(line('$'), a:text)
+endfunction
+
+function GetArgProperyFromLine()
+    " Return list with first elem being p-name and second being p-value
+    " If match not successful then empty list returned
+    let l:line = getline('.')
+    let l:match_list = matchlist(l:line, s:arg_pattern)
+    if empty(l:match_list)
+        return []
+    endif
+
+    return [l:match_list[1], l:match_list[2]]
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
 function LoadVUIConfig(file)
     let l:file_text = join(readfile(a:file))
@@ -35,7 +54,7 @@ function PrintVUIBufferArgs(vui_config)
     let l:arg_names = get(a:vui_config, 'args-order', keys(a:vui_config['args']))
     for arg in l:arg_names
         if !has_key(a:vui_config['args'], arg)
-            echo "No config defined for " . arg
+            echom "No config defined for " . arg
             continue
         endif
         let l:arg_node = a:vui_config['args'][arg]
@@ -45,11 +64,17 @@ function PrintVUIBufferArgs(vui_config)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
-" Editing Buffer
+" Section: Editing Buffer
 """""""""""""""""""""""""""""""""""""""""""
 function ArgValueCompletion(findstart, base)
     if a:findstart
-        return col('.')
+	    " locate the start of the word
+	    let l:line = getline('.')
+	    let l:start = col('.') - 1
+	    while l:start > 0 && l:line[l:start - 1] =~ '\S'
+	      let l:start -= 1
+	    endwhile
+	    return l:start
     endif
 
     let l:arg_pair = GetArgProperyFromLine()
@@ -65,8 +90,8 @@ function ArgValueCompletion(findstart, base)
     if !has_key(l:config_args, l:arg_pair[0])
         return []
     endif
-    let l:arg_node = l:config_args[l:arg_pair[0]]
 
+    let l:arg_node = l:config_args[l:arg_pair[0]]
     let l:arg_type = get(l:arg_node, 'type', 'string')
     if l:arg_type == 'boolean'
         return [s:enabled_keyword, s:disabled_keyword]
@@ -75,18 +100,16 @@ function ArgValueCompletion(findstart, base)
     let l:config_values = get(l:arg_node, 'values', [])
     let l:result = []
     for elem in l:config_values
-        " TODO fix
         if elem =~ '^' . a:base
             call add(l:result, elem)
         endif
     endfor
 
     return add(l:result, s:disabled_keyword)
-
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
-" Parse Buffer
+" Section: Parse Buffer
 """""""""""""""""""""""""""""""""""""""""""
 function OutputCommandFromVUIBuffer(vui_config)
     echom GenerateCommand(ParseVUIBufferArgs(a:vui_config), a:vui_config)
@@ -111,7 +134,7 @@ function GenerateCommand(args_dict, vui_config)
     let l:config_args = a:vui_config['args']
     for [k,v] in items(a:args_dict)
         if !has_key(l:config_args, k)
-            echo "No config defined for " . k
+            echom "No config defined for " . k
             continue
         endif
 
@@ -128,7 +151,7 @@ function GenerateCommand(args_dict, vui_config)
             endif
         else
             " TODO clean this part up
-            echo 'Invalid type for ' . k . ' defaulting to string'
+            echom 'Invalid type for ' . k . ' defaulting to string'
             call add(l:components, l:prefix . k . ' ' . v)
         endif
     endfor
@@ -136,26 +159,7 @@ function GenerateCommand(args_dict, vui_config)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
-" Utils
-"""""""""""""""""""""""""""""""""""""""""""
-function AppendLast(text)
-    call append(line('$'), a:text)
-endfunction
-
-function GetArgProperyFromLine()
-    " Return list with first elem being p-name and second being p-value
-    " If match not successful then empty list returned
-    let l:line = getline('.')
-    let l:match_list = matchlist(l:line, s:arg_pattern)
-    if empty(l:match_list)
-        return []
-    endif
-
-    return [l:match_list[1], l:match_list[2]]
-endfunction
-
-"""""""""""""""""""""""""""""""""""""""""""
-" Settings
+" Section: Settings
 """""""""""""""""""""""""""""""""""""""""""
 let g:vui_config_file = glob('~/Desktop/CurrentProjects/vui/doc/example.json')
 let s:vui_config = LoadVUIConfig(g:vui_config_file)

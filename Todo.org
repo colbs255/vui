@@ -4,12 +4,11 @@
 - [X] Read from config file
   + [X] JSON decoder
   + [X] validation?
-- [-] Output dictionary
+- [X] Output dictionary
   + [X] Output header info
   + [X] Output eac arg
   + [X] output default value for each arg
-  + [ ] default for boolean type
-- [-] Generate Command from buffer
+- [X] Generate Command from buffer
   + [X] ignore header
   + [X] parse all args in buffer
   + [X] different logic for boolean vs string
@@ -17,18 +16,20 @@
     + [X] string  - first check if disabled
   + [X] put all args together into 1 command
   + [X] output the command
-  + [ ] if string has disabled keyword dont include
+  + [X] if string has disabled keyword dont include
 - [-] Allow user to edit buffer
   - [X] basic autocomplete
-  - [ ] use tabs
-  - [ ] get correct index
-  - [ ] actually do pattern matching
+  - [X] actually do pattern matching
+  - [ ] it wont autocomplete for second time? stateful
 - [ ] Plugin Component
   + [ ] command to actually enter the mode
   + [ ] correct way to do plugin completion
   + [ ] detect filetye
   + [ ] fix the global thing of the vui config var
 * Extra Features
+- [ ] no autocomplete flag?
+- [ ] default for boolean type
+- [ ] use tabs
 - [ ] custom formatting for final arg output
 - [ ] syntax highlighting
   - [ ] enabled
@@ -38,3 +39,4 @@
 - [ ] Tab to move to next option
 - [ ] Tab to autocomplete
 - [ ] value generator like TODAY - 1
+- [ ] run it within vim

@@ -6,7 +6,8 @@
     "args": {
         "src": {
             "type": "string",
-            "values": ["www.google.com", "www.apple.com"]
+            "values": ["www.google.com", "www.apple.com"],
+            "default": "www.yahoo.com"
         },
         "region": {
             "type": "string",
@@ -18,7 +19,8 @@
             "values": ["2020-04-01"]
         },
         "binary": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": "_enabled_"
         }
     }
 }
