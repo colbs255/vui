@@ -7,7 +7,7 @@ setlocal completefunc=ArgValueCompletion
 
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
-let s:arg_pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
+let s:arg_pattern = "^:\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Utils
@@ -65,7 +65,7 @@ function s:PrintVUIBufferArgs(vui_config)
         endif
         let arg_node = a:vui_config['args'][arg]
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
-        call s:AppendLast(arg . ': '  . arg_value)
+        call s:AppendLast(':' . arg . ': '  . arg_value)
     endfor
 endfunction
 
@@ -117,10 +117,6 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Parse Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function OutputCommandFromVUIBuffer(vui_config)
-    echom s:GenerateCommand(s:ParseVUIBufferArgs(a:vui_config), a:vui_config)
-endfunction
-
 function s:ParseVUIBufferArgs(vui_config)
     let args_dict = {}
     " use search to go through buffer for matches
@@ -132,6 +128,10 @@ function s:ParseVUIBufferArgs(vui_config)
         let args_dict[arg_pair[0]] = arg_pair[1]
     endwhile
     return args_dict
+endfunction
+
+function s:GetCommand()
+    return  s:GenerateCommand(s:ParseVUIBufferArgs(s:vui_config), s:vui_config)
 endfunction
 
 function s:GenerateCommand(args_dict, vui_config)
@@ -162,6 +162,27 @@ function s:GenerateCommand(args_dict, vui_config)
         endif
     endfor
     return join(components, " ")    
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Section: CommandOutput
+"""""""""""""""""""""""""""""""""""""""""""
+function VUIOutputCommand()
+    echom s:GetCommand()
+endfunction
+
+function VUIExecuteCommand()
+    let command = s:GetCommand()
+    echom 'Executing command: ' . command
+    execute '!' . command
+endfunction
+
+function VUIExecuteCommandAndReadOuput()
+    let command = s:GetCommand()
+    echom 'Executing command: ' . command
+    call s:AppendLast(['', '=Output=', '*Command* ' . command])
+    call cursor('$', 1)    
+    execute 'read !' . command
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""

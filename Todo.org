@@ -27,19 +27,19 @@
   + [X] detect filetye
   + [X] set the config file somewhere
   + [X] fix the global thing of the vui config var
+- [-] How should i output the command?
+  - [X] fix how we call it
+  - [ ] output to buffer
+  - [X] output to shell
+  - [X] output the command
+  - [ ] create commands for each
 - [ ] Work with more than 1 CLI
+  - [ ] modify the json
+  - [ ] create a new file syntax and a new command
 * Extra Features
+- [ ] use dispatch
 - [ ] fix the s:config var (buffer)
 - [ ] no autocomplete flag?
-- [ ] default for boolean type
 - [ ] use tabs
 - [ ] custom formatting for final arg output
-- [ ] syntax highlighting
-  - [ ] enabled
-  - [ ] disabled
-  - [ ] prod
-- [ ] put command directly in commandline
-- [ ] Tab to move to next option
-- [ ] Tab to autocomplete
-- [ ] value generator like TODAY - 1
-- [ ] run it within vim
+- [ ] error handling - only read inside arguments
