@@ -1,1 +1,1 @@
-autocmd BufReadPost *.vui setfiletype vui
+autocmd BufNewFile,BufRead *.vui setfiletype vui

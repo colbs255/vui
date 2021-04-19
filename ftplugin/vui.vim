@@ -1,6 +1,10 @@
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Constants
 """""""""""""""""""""""""""""""""""""""""""
+let g:vui_config_file = get(g:, 'vui_config_file', '~/.vim/vui.json')
+
+setlocal completefunc=ArgValueCompletion
+
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
 let s:arg_pattern = "^\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
@@ -33,7 +37,6 @@ function LoadVUIConfig(file)
 endfunction
 
 function PrintVUIBuffer(vui_config)
-    vnew '__VUI__'
     %delete
     call s:PrintVUIBufferHeader(a:vui_config)
     call s:PrintVUIBufferArgs(a:vui_config)
@@ -164,6 +167,5 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Settings
 """""""""""""""""""""""""""""""""""""""""""
-setlocal completefunc=ArgValueCompletion
 let s:vui_config = LoadVUIConfig(g:vui_config_file)
 call PrintVUIBuffer(s:vui_config)

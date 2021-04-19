@@ -25,6 +25,7 @@
   + [ ] command to actually enter the mode
   + [ ] correct way to do plugin completion
   + [ ] detect filetye
+  + [ ] set the config file somewhere
   + [ ] fix the global thing of the vui config var
 * Extra Features
 - [ ] no autocomplete flag?
