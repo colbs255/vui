@@ -17,10 +17,10 @@
   + [X] put all args together into 1 command
   + [X] output the command
   + [X] if string has disabled keyword dont include
-- [-] Allow user to edit buffer
+- [X] Allow user to edit buffer
   - [X] basic autocomplete
   - [X] actually do pattern matching
-  - [ ] it wont autocomplete for second time? stateful
+  - [X] it wont autocomplete for second time? stateful
 - [ ] Plugin Component
   + [ ] command to actually enter the mode
   + [ ] correct way to do plugin completion
