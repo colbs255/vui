@@ -17,7 +17,6 @@
     + [X] string  - first check if disabled
   + [X] put all args together into 1 command
   + [X] output the command
-  + [ ] custom formatting for final arg output
   + [ ] if string has disabled keyword dont include
 - [-] Allow user to edit buffer
   - [X] basic autocomplete
@@ -30,6 +29,7 @@
   + [ ] detect filetye
   + [ ] fix the global thing of the vui config var
 * Extra Features
+- [ ] custom formatting for final arg output
 - [ ] syntax highlighting
   - [ ] enabled
   - [ ] disabled

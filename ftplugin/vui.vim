@@ -72,8 +72,16 @@ function ArgValueCompletion(findstart, base)
         return [s:enabled_keyword, s:disabled_keyword]
     endif
     
-    " let l:completion_list = get(l:arg_node, 'values', [])
-    return add(get(l:arg_node, 'values', []), s:disabled_keyword)
+    let l:config_values = get(l:arg_node, 'values', [])
+    let l:result = []
+    for elem in l:config_values
+        " TODO fix
+        if elem =~ '^' . a:base
+            call add(l:result, elem)
+        endif
+    endfor
+
+    return add(l:result, s:disabled_keyword)
 
 endfunction
 
