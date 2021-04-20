@@ -1,5 +1,4 @@
-command VUI :e ~/.vim/__VUI__.vui
-command -complete=customlist,GetVUIsCompletionFunction  -nargs=1 VUISelect call s:OpenVUI(<f-args>)
+command -complete=customlist,GetVUIsCompletionFunction  -nargs=1 VUI call s:OpenVUI(<f-args>)
 
 function GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)
     let vui_dict = LoadVUIConfig(g:vui_config_file)

@@ -27,7 +27,7 @@
     "StockReader": {
         "description": "Ouput statistic for a stock",
         "command": "python  ~/stock_reader.py",
-        "args-order": ["exchange", "ticker", "date", "value", "statistic"],
+        "args-order": ["exchange", "ticker", "date", "statistic"],
         "args": {
             "exchange": {
                 "values": ["NYSE", "NASDAQ", "JPX", "XLON"],

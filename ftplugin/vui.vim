@@ -93,7 +93,7 @@ function ArgValueCompletion(findstart, base)
         return []
     endif
 
-    let config_args = get(s:current_vui_config, 'args', [])
+    let config_args = get(b:current_vui_config, 'args', [])
     if empty(config_args)
         return []
     endif
@@ -136,14 +136,15 @@ function s:ParseVUIBufferArgs(vui_config)
 endfunction
 
 function s:GetCommand()
-    return  s:GenerateCommand(s:ParseVUIBufferArgs(s:current_vui_config), s:current_vui_config)
+    return  s:GenerateCommand(b:current_vui_config)
 endfunction
 
-function s:GenerateCommand(args_dict, vui_config)
+function s:GenerateCommand(vui_config)
+    let args_dict = s:ParseVUIBufferArgs(b:current_vui_config)
     let components = [a:vui_config['command']]
     let prefix = "--"
     let config_args = a:vui_config['args']
-    for [k,v] in items(a:args_dict)
+    for [k,v] in items(args_dict)
         if !has_key(config_args, k)
             echom "No config defined for " . k
             continue
@@ -199,8 +200,8 @@ command -buffer VUIExecuteCommandAndReadOuput :call VUIExecuteCommandAndReadOupu
 """""""""""""""""""""""""""""""""""""""""""
 function s:UpdateVUI()
     let current_vui_name = s:GetVUIName()
-    let s:current_vui_config = get(LoadVUIConfig(g:vui_config_file), current_vui_name, {})
-    call s:PrintVUIBuffer(current_vui_name, s:current_vui_config)
+    let b:current_vui_config = get(LoadVUIConfig(g:vui_config_file), current_vui_name, {})
+    call s:PrintVUIBuffer(current_vui_name, b:current_vui_config)
 endfunction
 
 call s:UpdateVUI()

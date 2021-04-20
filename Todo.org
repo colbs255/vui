@@ -34,7 +34,7 @@
   - [X] output the command
   - [X] create commands for each
   - [X] make the commands local to buffer
-- [-] Work with more than 1 CLI tool
+- [X] Work with more than 1 CLI tool
   - [X] modify the json
   - [X] could just create a command for selection
   - [X] modify vui script for local config
@@ -42,10 +42,11 @@
     - [X] look through config for that value and set buffer dictionary to that value
     - [X] use that value throught out the config
   - [X] arg match completion
-  - [ ] use buffer local settings
-  - [ ] small error saying it cant read value?
+  - [X] use buffer local settings
+  - [X] small error saying it cant read value?
 * Extra Features
 - [ ] use dispatch
+- [ ] allow multiple buffers of the same tool
 - [ ] no autocomplete flag?
 - [ ] use tabs
 - [ ] custom formatting for final arg output
