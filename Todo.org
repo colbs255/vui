@@ -1,6 +1,6 @@
 #+TITLE: Todo
 
-* Core Features
+* [ ] Core Features
 - [X] Read from config file
   + [X] JSON decoder
   + [X] validation?
@@ -27,19 +27,27 @@
   + [X] detect filetye
   + [X] set the config file somewhere
   + [X] fix the global thing of the vui config var
-- [-] How should i output the command?
+- [X] How should i output the command?
   - [X] fix how we call it
-  - [ ] output to buffer
+  - [X] output to buffer
   - [X] output to shell
   - [X] output the command
-  - [ ] create commands for each
-- [ ] Work with more than 1 CLI
-  - [ ] modify the json
-  - [ ] create a new file syntax and a new command
+  - [X] create commands for each
+  - [X] make the commands local to buffer
+- [-] Work with more than 1 CLI tool
+  - [X] modify the json
+  - [X] could just create a command for selection
+  - [ ] modify vui script for local config
+    - [ ] extract name from buffer name
+    - [ ] look through config for that value and set buffer dictionary to that value
+    - [ ] make the value buffer local
+    - [ ] use that value throught out the config
+  - [ ] arg match completion
 * Extra Features
 - [ ] use dispatch
-- [ ] fix the s:config var (buffer)
 - [ ] no autocomplete flag?
 - [ ] use tabs
 - [ ] custom formatting for final arg output
+* Refactor
+- [ ] fix the s:config var (buffer)
 - [ ] error handling - only read inside arguments

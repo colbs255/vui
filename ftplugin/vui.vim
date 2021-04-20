@@ -31,11 +31,6 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function LoadVUIConfig(file)
-    let file_text = join(readfile(a:file))
-    return json_decode(file_text)
-endfunction
-
 function PrintVUIBuffer(vui_config)
     %delete
     call s:PrintVUIBufferHeader(a:vui_config)
@@ -180,7 +175,7 @@ endfunction
 function VUIExecuteCommandAndReadOuput()
     let command = s:GetCommand()
     echom 'Executing command: ' . command
-    call s:AppendLast(['', '=Output=', '*Command* ' . command])
+    call s:AppendLast(['', '=Result=', '*Command* ' . command])
     call cursor('$', 1)    
     execute 'read !' . command
 endfunction
