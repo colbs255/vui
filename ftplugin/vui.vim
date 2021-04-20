@@ -8,6 +8,7 @@ setlocal completefunc=ArgValueCompletion
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
 let s:arg_pattern = "^:\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
+let s:file_name_pattern = "__\\(\\w\\+\\)__\\.vui"
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Utils
@@ -28,17 +29,26 @@ function s:GetArgProperyFromLine()
     return [match_list[1], match_list[2]]
 endfunction
 
+function s:GetVUIName()
+    let buffer_name = bufname()
+    let match_list = matchlist(buffer_name, s:file_name_pattern)
+    if len(match_list) < 2
+        return ""
+    endif
+    return match_list[1]
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function PrintVUIBuffer(vui_config)
+function s:PrintVUIBuffer(vui_config)
     %delete
     call s:PrintVUIBufferHeader(a:vui_config)
     call s:PrintVUIBufferArgs(a:vui_config)
 endfunction
 
 function s:PrintVUIBufferHeader(vui_config)
-    let config_name = get(a:vui_config, 'name', 'No name defined')
+    let config_name = s:current_vui_name != "" ? s:current_vui_name : "No name defined"
     let description = get(a:vui_config, 'description', 'No description defined')
     let header_lines = [description, '']
     call append(line('^'), '=' . config_name . '=')
@@ -83,7 +93,7 @@ function ArgValueCompletion(findstart, base)
         return []
     endif
 
-    let config_args = get(s:vui_config, 'args', [])
+    let config_args = get(s:current_vui_config, 'args', [])
     if empty(config_args)
         return []
     endif
@@ -126,7 +136,7 @@ function s:ParseVUIBufferArgs(vui_config)
 endfunction
 
 function s:GetCommand()
-    return  s:GenerateCommand(s:ParseVUIBufferArgs(s:vui_config), s:vui_config)
+    return  s:GenerateCommand(s:ParseVUIBufferArgs(s:current_vui_config), s:current_vui_config)
 endfunction
 
 function s:GenerateCommand(args_dict, vui_config)
@@ -187,5 +197,10 @@ command -buffer VUIExecuteCommandAndReadOuput :call VUIExecuteCommandAndReadOupu
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Settings
 """""""""""""""""""""""""""""""""""""""""""
-let s:vui_config = LoadVUIConfig(g:vui_config_file)
-call PrintVUIBuffer(s:vui_config)
+function s:UpdateVUI()
+    let s:current_vui_name = s:GetVUIName()
+    let s:current_vui_config = get(LoadVUIConfig(g:vui_config_file), s:current_vui_name, {})
+    call s:PrintVUIBuffer(s:current_vui_config)
+endfunction
+
+call s:UpdateVUI()
