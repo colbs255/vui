@@ -41,14 +41,14 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function s:PrintVUIBuffer(vui_config)
+function s:PrintVUIBuffer(vui_name, vui_config)
     %delete
-    call s:PrintVUIBufferHeader(a:vui_config)
+    call s:PrintVUIBufferHeader(a:vui_name, a:vui_config)
     call s:PrintVUIBufferArgs(a:vui_config)
 endfunction
 
-function s:PrintVUIBufferHeader(vui_config)
-    let config_name = s:current_vui_name != "" ? s:current_vui_name : "No name defined"
+function s:PrintVUIBufferHeader(vui_name, vui_config)
+    let config_name = a:vui_name != "" ? a:vui_name : "No name defined"
     let description = get(a:vui_config, 'description', 'No description defined')
     let header_lines = [description, '']
     call append(line('^'), '=' . config_name . '=')
@@ -198,9 +198,9 @@ command -buffer VUIExecuteCommandAndReadOuput :call VUIExecuteCommandAndReadOupu
 " Section: Settings
 """""""""""""""""""""""""""""""""""""""""""
 function s:UpdateVUI()
-    let s:current_vui_name = s:GetVUIName()
-    let s:current_vui_config = get(LoadVUIConfig(g:vui_config_file), s:current_vui_name, {})
-    call s:PrintVUIBuffer(s:current_vui_config)
+    let current_vui_name = s:GetVUIName()
+    let s:current_vui_config = get(LoadVUIConfig(g:vui_config_file), current_vui_name, {})
+    call s:PrintVUIBuffer(current_vui_name, s:current_vui_config)
 endfunction
 
 call s:UpdateVUI()
