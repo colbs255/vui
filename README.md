@@ -4,7 +4,8 @@ This vim plugin allows you to run complex command line tools and edit their argu
 Some command line tools have many arguments - they can be a hastle to remember and edit. This plugin allows you to edit the arguments in a vim buffer (using some of vim's built in features like autocomplete) and then run the command directly from vim. You can also print the output directly in the vim buffer.
 
 # Configuration
-VUI reads from a json file to figure out which command to run, what arguments to display, and what values can be autocompleted
+vui reads from a json file to figure out which command to run, what arguments to display, and what values can be autocompleted.
+
 You need to set `g:vui_config_file` in your vim config to let vim know where to find your config. This line in your `.vimrc` would work for example:
 ``` vim-script
 g:vui_config_file = glob('~/vui_config.json')
@@ -63,7 +64,7 @@ g:vui_config_file = glob('~/vui_config.json')
 # Completion
 vui reads from your config to suggest values for autocompletion. It detects the argument in the current line you are editing and suggests only the values for that argument. This is done via vim's user defined comletion (see `:h compl-function`)
 - While in insert mode `Ctrl-X Ctrl-U` activates the autocompletion for the command argument of the line are you are on
-- `Ctrl-N` moves to the *n*ext match and `Ctrl-P` moves to the *p*revious
+- `Ctrl-N` moves to the **n**ext match and `Ctrl-P` moves to the **p**revious
 - Once you've selected your value you can keep typing or leave insert mode
 - The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
 
