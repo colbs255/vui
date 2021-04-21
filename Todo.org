@@ -44,8 +44,15 @@
   - [X] arg match completion
   - [X] use buffer local settings
   - [X] small error saying it cant read value?
+- [ ] File saving and manipulating
+  - might want to save it
+  - or want a new one
+  - support instances
 * Extra Features
 - [ ] use dispatch
+- [ ] Make autocomplete faster, use the async thing you saw in help
+- [ ] substring matching (instead of first word)
+- [ ] show the command you are printing
 - [ ] allow multiple buffers of the same tool
 - [ ] no autocomplete flag?
 - [ ] use tabs
