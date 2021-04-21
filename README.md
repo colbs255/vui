@@ -52,7 +52,6 @@ g:vui_config_file = glob('~/vui_config.json')
                 "values": ["High", "Low", "Avg", "Volume"]
             }
         }
-
     }
 }
 ```
@@ -63,10 +62,10 @@ g:vui_config_file = glob('~/vui_config.json')
 
 # Completion
 vui reads from your config to suggest values for autocompletion. It detects the argument in the current line you are editing and suggests only the values for that argument. This is done via vim's user defined comletion (see `:h compl-function`)
-
 - While in insert mode `Ctrl-X Ctrl-U` activates the autocompletion for the command argument of the line are you are on
 - `Ctrl-N` moves to the *n*ext match and `Ctrl-P` moves to the *p*revious
 - Once you've selected your value you can keep typing or leave insert mode
+- The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
 
 # Commands
 ## Global Commands
