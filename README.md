@@ -1,7 +1,7 @@
 # vui
-This vim plugin allows you to run complex command line tools and edit their arguments directly from vim.
+vui (**v**im **u**ser **i**nterface) is a vim plugin that allows you to conveniently run complex command line tools and edit their arguments directly from vim.
 
-Some command line tools have many arguments - they can be a hastle to remember and edit. This plugin allows you to edit the arguments in a vim buffer (using some of vim's built in features like autocomplete) and then run the command directly from vim. You can also print the output directly in the vim buffer.
+Some command line tools have many arguments - they can be a hastle to remember and edit. This plugin allows you to quickly select the command line tool you want, edit the arguments in a vim buffer (using some of vim's built in features like autocomplete) and then run the command directly from vim. You can also print the output directly in the vim buffer.
 
 # Configuration
 vui reads from a json file to figure out which command to run, what arguments to display, and what values can be autocompleted.
@@ -10,7 +10,7 @@ You need to set `g:vui_config_file` in your vim config to let vim know where to 
 ``` vim-script
 g:vui_config_file = glob('~/vui_config.json')
 ```
-## Example Config
+## Example Configuration
 ``` json
 {
     "Tool1-Name": {
@@ -56,13 +56,14 @@ g:vui_config_file = glob('~/vui_config.json')
     }
 }
 ```
-## Config Notes
-- There are 2 types of args as of now: binary and string
-    - Each arg is a string by default (`"type": "binary"` will make it a binary arg).
-    - Binary fields don't have a value paired with them. `_enabled_` means it will appear in the final command
+## Configuration Format
+- There are 2 types of arguments: binary and string
+    - String is just a basic argument with no special logic, if the type is not specified then the arg will be treated as a string
+    - Binary args don't have a value paired with them - they are just on or off. `_enabled_` means it will appear in the final command
+        - `"type": "binary"` will make it a binary arg.
 
 # Completion
-vui reads from your config to suggest values for autocompletion. It detects the argument in the current line you are editing and suggests only the values for that argument. This is done via vim's user defined comletion (see `:h compl-function`)
+vui reads from your config to suggest values for autocompletion. It detects the argument in the current line you are editing and suggests only the values for that argument. This is done via vim's user defined completion (see `:h compl-function`)
 - While in insert mode `Ctrl-X Ctrl-U` activates the autocompletion for the command argument of the line are you are on
 - `Ctrl-N` moves to the **n**ext match and `Ctrl-P` moves to the **p**revious
 - Once you've selected your value you can keep typing or leave insert mode

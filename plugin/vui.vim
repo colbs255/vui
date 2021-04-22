@@ -2,7 +2,13 @@ command -complete=customlist,GetVUIsCompletionFunction  -nargs=1 VUI call s:Open
 
 function GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)
     let vui_dict = LoadVUIConfig(g:vui_config_file)
-    return keys(vui_dict)
+    let result = []
+    for k in keys(vui_dict)
+        if k =~ '^' . a:ArgLead
+            call add(result, k)
+        endif
+    endfor
+    return result
 endfunction
 
 function LoadVUIConfig(file)
