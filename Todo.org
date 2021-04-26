@@ -49,20 +49,34 @@
   - might want to save it
   - or want a new one
   - support instances
+  - 2 cases
+    - opening up a new file
+      - what is a new file?
+      - do full reload, dont care about buffer
+    - opening a file that already exists
+      - reload the functions (behind the scenes), not the text
 - [ ] Documentation
   - some sort of ascii cast
+- [ ] Put all of the state in the buffer itself rather than saving in memory
+  - [ ] have the type in the field
+  - [ ] somehow have the values
+  - [ ] have the command listed as well
 * Extra Features
 - [ ] use dispatch
+- [ ] allow for a function or shell script to generate the values for you
+- [ ] easy mode: tab complete
+  - [ ] or just a control space type thing
+- [ ] completion with case ignore
 - [ ] ssh command support
 - [ ] time field?
+  + [ ] this could be a multifield
 - [ ] multipart field?
+  + [ ] this can be used for a date (month, day, year)
+  + [ ] need a joiner string
 - [ ] Make autocomplete faster, use the async thing you saw in help
 - [ ] substring matching (instead of first word)
-- [ ] show the command you are printing
 - [ ] allow multiple buffers of the same tool
 - [ ] no autocomplete flag?
-- [ ] use tabs
 - [ ] custom formatting for final arg output
-* Refactor
-- [ ] fix the s:config var (buffer)
-- [ ] error handling - only read inside arguments
+* Robustness
+- [ ] only read args inside an arg section

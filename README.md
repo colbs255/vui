@@ -1,7 +1,7 @@
 # vui
 vui (**v**im **u**ser **i**nterface) is a vim plugin that allows you to conveniently run complex command line tools and edit their arguments directly from vim.
 
-Some command line tools have many arguments - they can be a hastle to remember and edit. This plugin allows you to quickly select the command line tool you want, edit the arguments in a vim buffer (using some of vim's built in features like autocomplete) and then run the command directly from vim. You can also print the output directly in the vim buffer.
+Some command line tools have many arguments - they can be a hastle to remember and edit. This plugin allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using autocomplete, and then run the command directly from vim. You can also print the output directly in the vim buffer.
 
 # Configuration
 vui reads from a json file to figure out which command to run, what arguments to display, and what values can be autocompleted.
@@ -57,6 +57,11 @@ g:vui_config_file = glob('~/vui_config.json')
 }
 ```
 ## Configuration Format
+- Configuration is a json file with each key being the name of the tool and the value containing information for the tool:
+    - `description`: quick discription of tool that is displayed on vui page
+    - `command`: the command to run
+    - `args-order`: list of args indicating the order in which they will be displayed in the vui buffer
+    - `args`: the display information for each arg of the tool
 - There are 2 types of arguments: binary and string
     - String is just a basic argument with no special logic, if the type is not specified then the arg will be treated as a string
     - Binary args don't have a value paired with them - they are just on or off. `_enabled_` means it will appear in the final command
