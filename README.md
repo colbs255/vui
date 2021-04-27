@@ -1,10 +1,10 @@
 # vui
 vui (**v**im **u**ser **i**nterface) is a vim plugin that allows you to conveniently run complex command line tools and edit their arguments directly from vim.
 
-Some command line tools have many arguments - they can be a hastle to remember and edit. This plugin allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using autocomplete, and then run the command directly from vim. You can also print the output directly in the vim buffer.
+Some command line tools have many arguments - they can be a hastle to remember and edit. This plugin allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using vim completion, and then run the command directly from vim. You can also print the output directly in the vim buffer.
 
 # Configuration
-vui reads from a json file to figure out which command to run, what arguments to display, and what values can be autocompleted.
+vui reads from a json file to figure out which command to run, what arguments to display, and what values can be completed.
 
 You need to set `g:vui_config_file` in your vim config to let vim know where to find your config. This line in your `.vimrc` would work for example:
 ``` vim-script
@@ -66,10 +66,12 @@ g:vui_config_file = glob('~/vui_config.json')
     - String is just a basic argument with no special logic, if the type is not specified then the arg will be treated as a string
     - Binary args don't have a value paired with them - they are just on or off. `_enabled_` means it will appear in the final command
         - `"type": "binary"` will make it a binary arg.
+- For each arg, specify the values used for completion via a list in `values` and a default value with `default`
+    - If no default is specified then `_disabled_` will be used
 
 # Completion
-vui reads from your config to suggest values for autocompletion. It detects the argument in the current line you are editing and suggests only the values for that argument. This is done via vim's user defined completion (see `:h compl-function`)
-- While in insert mode `Ctrl-X Ctrl-U` activates the autocompletion for the command argument of the line are you are on
+vui reads from your config to suggest values for completion. It detects the argument in the current line you are editing and suggests only the values for that argument. This is done via vim's user defined completion (see `:h compl-function`)
+- While in insert mode `Ctrl-X Ctrl-U` activates the completion for the command argument of the line are you are on
 - `Ctrl-N` moves to the **n**ext match and `Ctrl-P` moves to the **p**revious
 - Once you've selected your value you can keep typing or leave insert mode
 - The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
