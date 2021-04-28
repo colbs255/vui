@@ -1,3 +1,8 @@
+if exists("g:loaded_vui")
+  finish
+endif
+let g:loaded_vui = 1
+
 command -complete=customlist,GetVUIsCompletionFunction  -nargs=1 VUI call s:OpenVUI(<f-args>)
 
 function GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)

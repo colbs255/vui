@@ -46,9 +46,19 @@
   - [X] use buffer local settings
   - [X] small error saying it cant read value?
 - [ ] File saving and manipulating
+  - The entrypoint command...
+    - opens the buffer
+    - then sets the buffer variable with what you entered
+    - then calls load which loads the config using the buffer you just set
   - might want to save it
+  - somehow set a buffer local variable in the command
   - or want a new one
   - support instances
+  - Look up...
+    - buftype
+    - bufhidden
+    - buflisted
+  - use a buffer local variable for the type
   - 2 cases
     - opening up a new file
       - do full reload, dont care about buffer
@@ -58,6 +68,13 @@
       - BufRead
     - command that outputs the data to a file of your choice
     - There are buffer commands also
+- [ ] some sort of if exists so we don't keep sourcing the script
+- [ ] localleader commands
+  - outputcommand:
+  - execute:
+  - printtobuffer:
+  - writetofile:
+- [ ] use shellescape() vim function for when executing
 - [ ] Documentation
   - some sort of ascii cast
 * Extra Features

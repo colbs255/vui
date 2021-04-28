@@ -171,7 +171,7 @@ function s:GenerateCommand(vui_config)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
-" Section: CommandOutput
+" Section: Commands
 """""""""""""""""""""""""""""""""""""""""""
 function VUIOutputCommand()
     echom s:GetCommand()
