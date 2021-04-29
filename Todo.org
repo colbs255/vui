@@ -62,6 +62,7 @@
   - [X] use =<Plug>=
 - [ ] use shellescape() vim function for when executing
 - [ ] Documentation
+  - [ ] doc mappings
   - some sort of ascii cast
 * Extra Features
 - [ ] use autoload
