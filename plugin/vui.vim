@@ -65,6 +65,7 @@ function s:PrintVUIBufferArgs(vui_config)
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
         call s:AppendLast(':' . arg . ': '  . arg_value)
     endfor
+    call s:AppendLast(['', '=Results='])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -178,9 +179,10 @@ endfunction
 function VUIExecuteCommandAndReadOuput()
     let command = s:GetCommand()
     echom 'Executing command: ' . command
-    call s:AppendLast(['', '=Result=', '*Command* ' . command])
+    call s:AppendLast('Command: ' . command)
     call cursor('$', 1)    
     execute 'read !' . command
+    call s:AppendLast('')
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
