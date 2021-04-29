@@ -184,6 +184,13 @@ function VUIExecuteCommandAndReadOuput()
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
+" Section: Mappings
+"""""""""""""""""""""""""""""""""""""""""""
+noremap <Plug>(vui-output-command) :VUIOutputCommand<CR>
+noremap <Plug>(vui-execute-command) :VUIExecuteCommand<CR>
+noremap <Plug>(vui-execute-command-and-read) :VUIExecuteCommandAndReadOuput<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
 """""""""""""""""""""""""""""""""""""""""""
 command -complete=customlist,GetVUIsCompletionFunction  -nargs=1 VUI call s:OpenVUI(<f-args>)
