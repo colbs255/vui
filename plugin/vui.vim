@@ -10,7 +10,7 @@ let g:vui_config_file = get(g:, 'vui_config_file', '~/.vim/vui.json')
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
 let s:arg_pattern = "^:\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
-let s:file_name_pattern = "__\\(\\w\\+\\)__\\.vui"
+let s:results_title = '=Results='
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Utils
@@ -29,6 +29,13 @@ function s:GetArgProperyFromLine()
     endif
 
     return [match_list[1], match_list[2]]
+endfunction
+
+function s:WriteResultsToFile(file_name)
+    call cursor(1,1)
+    if search('^' . s:results_title, 'W')
+        execute '.,$write! ' . a:file_name
+    endif
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -65,7 +72,7 @@ function s:PrintVUIBufferArgs(vui_config)
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
         call s:AppendLast(':' . arg . ': '  . arg_value)
     endfor
-    call s:AppendLast(['', '=Results='])
+    call s:AppendLast(['', s:results_title])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -185,12 +192,18 @@ function VUIExecuteCommandAndReadOuput()
     call s:AppendLast('')
 endfunction
 
+function VUIWriteResults()
+    let file_name = input('Enter file name: ', '', 'file')
+    call s:WriteResultsToFile(file_name)
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Mappings
 """""""""""""""""""""""""""""""""""""""""""
 noremap <Plug>(vui-output-command) :VUIOutputCommand<CR>
 noremap <Plug>(vui-execute-command) :VUIExecuteCommand<CR>
 noremap <Plug>(vui-execute-command-and-read) :VUIExecuteCommandAndReadOuput<CR>
+noremap <Plug>(vui-write-results) :VUIWriteResults<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
@@ -222,4 +235,3 @@ function s:UpdateVUI(vui_name)
     let b:current_vui_config = get(LoadVUIConfig(g:vui_config_file), a:vui_name, {})
     call s:PrintVUIBuffer(a:vui_name, b:current_vui_config)
 endfunction
-

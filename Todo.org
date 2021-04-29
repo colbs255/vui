@@ -48,19 +48,18 @@
 - [X] Make vui buffer unassociated with a file so its more like a tool
   - [X]allow user to close the buffer without being asked to save
 - [X] Remove the file name dependency
-- [ ] Command that outputs results to file of your choice
-  - [ ] Get the file name from user
-  - [ ] Create the file
-  - [ ] parse all results
-  - [ ] write the results to file
+- [X] Command that outputs results to file of your choice
+  - [X] Get the file name from user
+  - [X] Create the file and write results
+    - [X] search for '=Results='
+    - [X] =.,$write <file-name>=
 - [-] localleader (or just buffer local) commands
   - [X] outputcommand:
   - [X] execute:
   - [X] printtobuffer:
-  - [ ] writetofile:
+  - [X] writetofile:
   - [ ] clear value of current line and go into autocomplete mode
   - [X] use =<Plug>=
-- [ ] use shellescape() vim function for when executing
 - [ ] Documentation
   - [ ] doc mappings
   - some sort of ascii cast
@@ -69,8 +68,6 @@
 - [ ] have the actual command in the buffer as well so user can edit it if needed
 - [ ] use dispatch
 - [ ] allow for a function or shell script to generate the values for you
-- [ ] easy mode: tab complete
-  - [ ] or just a control space type thing
 - [ ] completion with case ignore
 - [ ] ssh command support
 - [ ] multipart field?
@@ -80,11 +77,11 @@
   + [ ] this could be a multifield
 - [ ] Make autocomplete faster, use the async thing you saw in help
 - [ ] substring matching (instead of first word)
-- [ ] allow multiple buffers of the same tool
 - [ ] custom formatting for final arg output
+* Robustness
+- [ ] use shellescape() vim function when executing command
+- [ ] only read args inside an arg section
 - [ ] Put all of the state in the buffer itself rather than saving in memory
   - [ ] have the type in the field
   - [ ] somehow have the values
   - [ ] have the command listed as well
-* Robustness
-- [ ] only read args inside an arg section
