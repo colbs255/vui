@@ -60,8 +60,6 @@
   - [X] writetofile:
   - [X] clear value of current line and go into autocomplete mode
   - [X] use =<Plug>=
-- [ ] Clean up the SIDs
-- [ ] The mappings and commands are wonky.. figure out best way
 - [ ] Documentation
   - [ ] doc mappings
   - some sort of ascii cast

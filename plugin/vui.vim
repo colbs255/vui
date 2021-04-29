@@ -40,6 +40,12 @@ function s:WriteResultsToFile(file_name)
     endif
 endfunction
 
+function s:LoadVUIConfig(file)
+    let file_text = join(readfile(a:file))
+    return json_decode(file_text)
+endfunction
+
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
@@ -80,7 +86,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Editing Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function ArgValueCompletion(findstart, base)
+function VUIArgValueCompletion(findstart, base)
     if a:findstart
 	    " locate the start of the word
 	    let line = getline('.')
@@ -212,19 +218,19 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Mappings
 """""""""""""""""""""""""""""""""""""""""""
-noremap <Plug>(vui-output-command) :VUIOutputCommand<CR>
-noremap <Plug>(vui-execute-command) :VUIExecuteCommand<CR>
-noremap <Plug>(vui-execute-command-and-read) :VUIExecuteCommandAndReadOuput<CR>
-noremap <Plug>(vui-write-results) :VUIWriteResults<CR>
+noremap <Plug>(vui-output-command) :call VUIOutputCommand()<CR>
+noremap <Plug>(vui-execute-command) :call VUIExecuteCommand()<CR>
+noremap <Plug>(vui-execute-command-and-read) :call VUIExecuteCommandAndReadOuput()<CR>
+noremap <Plug>(vui-write-results) :call VUIWriteResults()<CR>
 noremap <silent> <Plug>(vui-change-arg-for-line) :call <SID>ChangeArgValueForLine()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
 """""""""""""""""""""""""""""""""""""""""""
-command -complete=customlist,GetVUIsCompletionFunction  -nargs=1 VUI call s:OpenVUI(<f-args>)
+command -complete=customlist,<SID>GetVUIsCompletionFunction  -nargs=1 VUI call s:OpenVUI(<f-args>)
 
-function GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)
-    let vui_dict = LoadVUIConfig(g:vui_config_file)
+function s:GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)
+    let vui_dict = s:LoadVUIConfig(g:vui_config_file)
     let result = []
     for k in keys(vui_dict)
         if k =~ '^' . a:ArgLead
@@ -234,17 +240,12 @@ function GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)
     return result
 endfunction
 
-function LoadVUIConfig(file)
-    let file_text = join(readfile(a:file))
-    return json_decode(file_text)
-endfunction
-
 function s:OpenVUI(vui_name)
     execute 'silent edit __' . a:vui_name . '__.vui'
     call s:UpdateVUI(a:vui_name)
 endfunction
 
 function s:UpdateVUI(vui_name)
-    let b:current_vui_config = get(LoadVUIConfig(g:vui_config_file), a:vui_name, {})
+    let b:current_vui_config = get(s:LoadVUIConfig(g:vui_config_file), a:vui_name, {})
     call s:PrintVUIBuffer(a:vui_name, b:current_vui_config)
 endfunction
