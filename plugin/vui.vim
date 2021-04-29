@@ -155,7 +155,6 @@ function s:GenerateCommand(vui_config)
                 call add(components, prefix . k . ' ' . v)
             endif
         else
-            " TODO clean this part up
             echom 'Invalid type for ' . k . ' defaulting to string'
             call add(components, prefix . k . ' ' . v)
         endif
@@ -206,7 +205,7 @@ function LoadVUIConfig(file)
 endfunction
 
 function s:OpenVUI(vui_name)
-    execute ':e ~/.vim/__' . a:vui_name . '__.vui'
+    execute 'silent edit __' . a:vui_name . '__.vui'
     call s:UpdateVUI(a:vui_name)
 endfunction
 

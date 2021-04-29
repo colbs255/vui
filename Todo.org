@@ -45,33 +45,26 @@
   - [X] arg match completion
   - [X] use buffer local settings
   - [X] small error saying it cant read value?
-- [ ] File saving and manipulating
-  - might want to save it
-  - support instances
-  - Look up...
-    - buftype
-    - bufhidden
-    - buflisted
-  - use a buffer local variable for the type
-  - 2 cases
-    - opening up a new file
-      - do full reload, dont care about buffer
-      - BufNewFile
-    - opening a file that already exists
-      - reload the functions (behind the scenes), not the text
-      - BufRead
-    - command that outputs the data to a file of your choice
-    - There are buffer commands also
-- [ ] some sort of if exists so we don't keep sourcing the script
-- [ ] localleader commands
-  - outputcommand:
-  - execute:
-  - printtobuffer:
-  - writetofile:
+- [X] Make vui buffer unassociated with a file so its more like a tool
+  - [X]allow user to close the buffer without being asked to save
+- [X] Remove the file name dependency
+- [ ] Command that outputs results to file of your choice
+  - [ ] Get the file name from user
+  - [ ] Create the file
+  - [ ] parse all results
+  - [ ] write the results to file
+- [ ] localleader (or just buffer local) commands
+  - [ ] outputcommand:
+  - [ ] execute:
+  - [ ] printtobuffer:
+  - [ ] writetofile:
+  - [ ] clear value of current line and go into autocomplete mode
+  - [ ] use =<Plug>=
 - [ ] use shellescape() vim function for when executing
 - [ ] Documentation
   - some sort of ascii cast
 * Extra Features
+- [ ] use autoload
 - [ ] have the actual command in the buffer as well so user can edit it if needed
 - [ ] use dispatch
 - [ ] allow for a function or shell script to generate the values for you
