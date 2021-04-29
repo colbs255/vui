@@ -53,13 +53,15 @@
   - [X] Create the file and write results
     - [X] search for '=Results='
     - [X] =.,$write <file-name>=
-- [-] localleader (or just buffer local) commands
+- [X] localleader (or just buffer local) commands
   - [X] outputcommand:
   - [X] execute:
   - [X] printtobuffer:
   - [X] writetofile:
-  - [ ] clear value of current line and go into autocomplete mode
+  - [X] clear value of current line and go into autocomplete mode
   - [X] use =<Plug>=
+- [ ] Clean up the SIDs
+- [ ] The mappings and commands are wonky.. figure out best way
 - [ ] Documentation
   - [ ] doc mappings
   - some sort of ascii cast
@@ -78,7 +80,9 @@
 - [ ] Make autocomplete faster, use the async thing you saw in help
 - [ ] substring matching (instead of first word)
 - [ ] custom formatting for final arg output
+- [ ] Code comments
 * Robustness
+- [ ] function for mappings if they already exist
 - [ ] use shellescape() vim function when executing command
 - [ ] only read args inside an arg section
 - [ ] Put all of the state in the buffer itself rather than saving in memory

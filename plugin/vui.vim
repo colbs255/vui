@@ -10,6 +10,8 @@ let g:vui_config_file = get(g:, 'vui_config_file', '~/.vim/vui.json')
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
 let s:arg_pattern = "^:\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
+let s:quick_change_arg_pattern = "^:\\(\\w\\+\\):"
+" This is just the arg pattern but only the arg name (no value)
 let s:results_title = '=Results='
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -120,6 +122,16 @@ function ArgValueCompletion(findstart, base)
     return add(result, s:disabled_keyword)
 endfunction
 
+function s:ChangeArgValueForLine()
+    let line = getline('.')
+    let arg = matchstr(line, s:quick_change_arg_pattern)
+    if arg != ''
+        call setline(line('.'), arg . ' ')
+        startinsert!
+        " equivalent to A in normal mode
+    endif
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Parse Buffer
 """""""""""""""""""""""""""""""""""""""""""
@@ -204,6 +216,7 @@ noremap <Plug>(vui-output-command) :VUIOutputCommand<CR>
 noremap <Plug>(vui-execute-command) :VUIExecuteCommand<CR>
 noremap <Plug>(vui-execute-command-and-read) :VUIExecuteCommandAndReadOuput<CR>
 noremap <Plug>(vui-write-results) :VUIWriteResults<CR>
+noremap <silent> <Plug>(vui-change-arg-for-line) :call <SID>ChangeArgValueForLine()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
