@@ -1,6 +1,10 @@
 if exists("g:loaded_vui")
   finish
 endif
+if v:version < 800
+    echoerr 'Vim 8 required for vui'
+    finish
+endif
 let g:loaded_vui = 1
 
 """""""""""""""""""""""""""""""""""""""""""

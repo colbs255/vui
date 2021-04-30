@@ -62,8 +62,8 @@
   - [X] clear value of current line and go into autocomplete mode
   - [X] toggle mapping (enabled to disabled and reverse)
   - [X] use =<Plug>=
-- [ ] syntax highlighting for command
-- [ ] check version
+- [X] syntax highlighting for command
+- [X] check version
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
 - [-] Documentation
