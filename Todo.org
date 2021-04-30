@@ -60,12 +60,14 @@
   - [X] writetofile:
   - [X] clear value of current line and go into autocomplete mode
   - [X] use =<Plug>=
-- [ ] Documentation
-  - [ ] doc mappings
-  - some sort of ascii cast
+- [-] Documentation
+  - [X] doc mappings
+  - [ ] some sort of ascii cast
 * Extra Features
 - [ ] use autoload
 - [ ] easy mode setting
+  - [ ] tab complete
+  - [ ] display mappings
 - [ ] have the actual command in the buffer as well so user can edit it if needed
 - [ ] use dispatch
 - [ ] allow for a function or shell script to generate the values for you
