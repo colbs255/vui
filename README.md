@@ -1,7 +1,7 @@
 # vui
 vui (**v**im **u**ser **i**nterface) is a vim plugin that serves as a low-level frontend to your command line tools by allowing you to quickly edit arguments and execute the commands directly from vim
 
-Some command line tools have many arguments - they are a hastle to remember and edit. vui allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using vim completion, and then run the command directly from vim. vui can also print the results directly into the vim buffer and save it to a file.
+Some command line tools have many arguments and are a hastle to remember and edit. vui allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using vim completion, and then run the command directly from vim. vui can also print the results directly into the vim buffer and save it to a file.
 
 # Configuration
 vui reads from a json file to figure out which command to run, what arguments to display, and what values can be completed.
