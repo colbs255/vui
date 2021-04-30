@@ -65,6 +65,7 @@
   - some sort of ascii cast
 * Extra Features
 - [ ] use autoload
+- [ ] easy mode setting
 - [ ] have the actual command in the buffer as well so user can edit it if needed
 - [ ] use dispatch
 - [ ] allow for a function or shell script to generate the values for you
@@ -73,12 +74,11 @@
 - [ ] multipart field?
   + [ ] this can be used for a date (month, day, year)
   + [ ] need a joiner string
-- [ ] time field?
+- [ ] time field
   + [ ] this could be a multifield
 - [ ] Make autocomplete faster, use the async thing you saw in help
 - [ ] substring matching (instead of first word)
 - [ ] custom formatting for final arg output
-- [ ] Code comments
 * Robustness
 - [ ] function for mappings if they already exist
 - [ ] use shellescape() vim function when executing command
