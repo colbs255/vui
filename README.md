@@ -8,10 +8,10 @@ vui reads from a json file to figure out which command to run, what arguments to
 
 Set `g:vui_config_file` in your vim config to let vim know where to find your config. This line in your `.vimrc` would work for example:
 ``` vim-script
-g:vui_config_file = glob('~/vui_config.json')
+g:vui_config_file = '~/vui_config.json'
 ```
 
-Alternatively, you can save the config file as `~/.vim/vui.json`
+If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
 ## Example Configuration
 ``` json
 {

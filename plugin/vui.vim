@@ -41,7 +41,7 @@ function s:WriteResultsToFile(file_name)
 endfunction
 
 function s:LoadVUIConfig(file)
-    let file_text = join(readfile(a:file))
+    let file_text = join(readfile(glob(a:file)))
     return json_decode(file_text)
 endfunction
 
