@@ -9,9 +9,8 @@ let g:loaded_vui = 1
 let g:vui_config_file = get(g:, 'vui_config_file', '~/.vim/vui.json')
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
-let s:arg_pattern = "^:\\(\\w\\+\\):\\s\\+\\(.*\\)\\s*$"
-let s:quick_change_arg_pattern = "^:\\(\\w\\+\\):"
-" This is just the arg pattern but only the arg name (no value)
+let s:arg_only_pattern = "^:\\(\\w\\+\\):"
+let s:arg_and_value_pattern = s:arg_only_pattern . "\\s\\+\\(.*\\)\\s*$"
 let s:results_title = '=Results='
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -24,13 +23,19 @@ endfunction
 function s:GetArgProperyFromLine()
     " Return list with first elem being p-name and second being p-value
     " If match not successful then empty list returned
+    " If value not found then only list with arg name returned
     let line = getline('.')
-    let match_list = matchlist(line, s:arg_pattern)
-    if empty(match_list)
+    let arg_only_match = matchlist(line, s:arg_only_pattern)
+    if empty(arg_only_match)
         return []
     endif
-
-    return [match_list[1], match_list[2]]
+    let arg_name = arg_only_match[1]
+    let match_list = matchlist(line, s:arg_and_value_pattern)
+    if len(match_list) < 3
+        return [arg_name]
+    endif
+    let arg_value = match_list[2]
+    return [arg_name, arg_value]
 endfunction
 
 function s:WriteResultsToFile(file_name)
@@ -45,6 +50,14 @@ function s:LoadVUIConfig(file)
     return json_decode(file_text)
 endfunction
 
+function s:GetInfoForArg(arg_name)
+    let args = get(b:current_vui_config, 'args', {})
+    return get(args, a:arg_name, {})
+endfunction
+
+function s:FormatArgNameForBuffer(arg_name)
+    return ':' . a:arg_name . ':'
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
@@ -78,7 +91,7 @@ function s:PrintVUIBufferArgs(vui_config)
         endif
         let arg_node = a:vui_config['args'][arg]
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
-        call s:AppendLast(':' . arg . ': '  . arg_value)
+        call s:AppendLast(s:FormatArgNameForBuffer(arg) . ' '  . arg_value)
     endfor
     call s:AppendLast(['', s:results_title])
 endfunction
@@ -102,64 +115,66 @@ function VUIArgValueCompletion(findstart, base)
         return []
     endif
 
-    let config_args = get(b:current_vui_config, 'args', [])
-    if empty(config_args)
+    let arg_node = s:GetInfoForArg(arg_pair[0])
+    if empty(arg_node)
         return []
     endif
 
-    if !has_key(config_args, arg_pair[0])
-        return []
-    endif
-
-    let arg_node = config_args[arg_pair[0]]
     let arg_type = get(arg_node, 'type', 'string')
-    if arg_type == 'boolean'
-        return [s:enabled_keyword, s:disabled_keyword]
-    endif
-    
-    let config_values = get(arg_node, 'values', [])
     let result = []
-    for elem in config_values
-        if elem =~ '^' . a:base
-            call add(result, elem)
-        endif
-    endfor
+    if arg_type == 'boolean'
+        call add(result, s:enabled_keyword)
+    else
+        let config_values = get(arg_node, 'values', [])
+        for elem in config_values
+            if elem =~ '^' . a:base
+                call add(result, elem)
+            endif
+        endfor
+    endif
 
     return add(result, s:disabled_keyword)
 endfunction
 
 function s:ChangeArgValueForLine()
-    let line = getline('.')
-    let arg = matchstr(line, s:quick_change_arg_pattern)
-    if arg != ''
-        call setline(line('.'), arg . ' ')
+    let pair = s:GetArgProperyFromLine()
+    if !empty(pair)
+        call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ')
         startinsert!
         " equivalent to A in normal mode
     endif
 endfunction
 
+function s:ToggleArgForLine()
+    let pair = s:GetArgProperyFromLine()
+    let new_value = ''
+    if empty(pair)
+        return
+    elseif len(pair) == 1
+        let new_value = s:disabled_keyword
+    else
+        " check if binary
+        let arg_node = s:GetInfoForArg(pair[0])
+        let current_value = pair[1]
+        let type = get(arg_node, 'type', 'string')
+        if type == 'boolean'
+            let new_value = current_value == s:disabled_keyword ? s:enabled_keyword : s:disabled_keyword
+        else
+            let new_value = current_value == s:disabled_keyword ? "" : s:disabled_keyword
+        endif
+    endif
+    call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ' . new_value)
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Parse Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function s:ParseVUIBufferArgs(vui_config)
-    let args_dict = {}
-    " use search to go through buffer for matches
-    call cursor(1,1)
-    " (word at beginning of line) followed by colon followed by 1 or more whitespace
-    " (followed by any characters) excluding trailing whitespace
-    while search(s:arg_pattern, 'W')
-        let arg_pair = s:GetArgProperyFromLine()
-        let args_dict[arg_pair[0]] = arg_pair[1]
-    endwhile
-    return args_dict
-endfunction
-
 function s:GetCommand()
     return  s:GenerateCommand(b:current_vui_config)
 endfunction
 
 function s:GenerateCommand(vui_config)
-    let args_dict = s:ParseVUIBufferArgs(b:current_vui_config)
+    let args_dict = s:ParseVUIBufferArgs(a:vui_config)
     let components = [a:vui_config['command']]
     let prefix = "--"
     let config_args = a:vui_config['args']
@@ -188,6 +203,19 @@ function s:GenerateCommand(vui_config)
     return join(components, " ")    
 endfunction
 
+function s:ParseVUIBufferArgs(vui_config)
+    let args_dict = {}
+    " use search to go through buffer for matches
+    call cursor(1,1)
+    " (word at beginning of line) followed by colon followed by 1 or more whitespace
+    " (followed by any characters) excluding trailing whitespace
+    while search(s:arg_and_value_pattern, 'W')
+        let arg_pair = s:GetArgProperyFromLine()
+        let args_dict[arg_pair[0]] = arg_pair[1]
+    endwhile
+    return args_dict
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Commands
 """""""""""""""""""""""""""""""""""""""""""
@@ -204,7 +232,7 @@ endfunction
 function VUIExecuteCommandAndReadOuput()
     let command = s:GetCommand()
     echom 'Executing command: ' . command
-    call s:AppendLast('Command: ' . command)
+    call s:AppendLast('*Command* ' . command)
     call cursor('$', 1)    
     execute 'read !' . command
     call s:AppendLast('')
@@ -223,6 +251,7 @@ noremap <Plug>(vui-execute-command) :call VUIExecuteCommand()<CR>
 noremap <Plug>(vui-execute-command-and-read) :call VUIExecuteCommandAndReadOuput()<CR>
 noremap <Plug>(vui-write-results) :call VUIWriteResults()<CR>
 noremap <silent> <Plug>(vui-change-arg-for-line) :call <SID>ChangeArgValueForLine()<CR>
+noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point

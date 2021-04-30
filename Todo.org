@@ -53,15 +53,22 @@
   - [X] Create the file and write results
     - [X] search for '=Results='
     - [X] =.,$write <file-name>=
+- [X] refactor the get arg and value function and use that everywhere
 - [X] localleader (or just buffer local) commands
   - [X] outputcommand:
   - [X] execute:
   - [X] printtobuffer:
   - [X] writetofile:
   - [X] clear value of current line and go into autocomplete mode
+  - [X] toggle mapping (enabled to disabled and reverse)
   - [X] use =<Plug>=
+- [ ] syntax highlighting for command
+- [ ] check version
+- [ ] Support commands that have "main" arguments like grep
+  - [ ] might need a reverse args if the flag should appear first
 - [-] Documentation
   - [X] doc mappings
+  - [ ] add the vim version requirements (json dependency)
   - [ ] some sort of ascii cast
 * Extra Features
 - [ ] use autoload
@@ -70,6 +77,7 @@
   - [ ] tab complete
   - [ ] display mappings
 - [ ] have the actual command in the buffer as well so user can edit it if needed
+- [ ] cust formatting for executing output
 - [ ] multipart field?
   + [ ] this can be used for a date (month, day, year)
   + [ ] need a joiner string
@@ -82,7 +90,8 @@
 - [ ] Make autocomplete faster, use the async thing you saw in help
 - [ ] substring matching (instead of first word)
 * Robustness
-- [ ] function for mappings if they already exist
+- [X] function for mappings if they already exist
+- [ ] use same regex for higlgithing and searching
 - [ ] use shellescape() vim function when executing command
 - [ ] only read args inside an arg section
 - [ ] Put all of the state in the buffer itself rather than saving in memory

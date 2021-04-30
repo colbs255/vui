@@ -110,3 +110,6 @@ All mappings are normal mode mappings. Each mapping can be overridden with the c
 - `<localleader>c`
     - Delete the arg value in the current line and go into insert mode for quick value changes
     - `<Plug>(vui-change-arg-for-line)`
+- `<localleader>t`
+    - Toggle the arg value in the current line. Enabled will switch to disabled and vice versa
+    - `<Plug>(vui-toggle-arg)`
