@@ -1,17 +1,17 @@
 # vui
-vui (**v**im **u**ser **i**nterface) is a vim plugin that allows you to conveniently run complex command line tools and edit their arguments directly from vim. It serves as a low-level front end to your command line tools.
+vui (**v**im **u**ser **i**nterface) is a vim plugin that serves as a low-level frontend to your command line tools by allowing you to quickly edit arguments and execute the commands directly from vim
 
-Some command line tools have many arguments - they are a hastle to remember and edit. vui allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using vim completion, and then run the command directly from vim. You can also print the results directly into the vim buffer and save it to a file.
+Some command line tools have many arguments - they are a hastle to remember and edit. vui allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using vim completion, and then run the command directly from vim. vui can also print the results directly into the vim buffer and save it to a file.
 
 # Configuration
 vui reads from a json file to figure out which command to run, what arguments to display, and what values can be completed.
 
-You need to set `g:vui_config_file` in your vim config to let vim know where to find your config. This line in your `.vimrc` would work for example:
+Set `g:vui_config_file` in your vim config to let vim know where to find your config. This line in your `.vimrc` would work for example:
 ``` vim-script
 g:vui_config_file = glob('~/vui_config.json')
 ```
 
-If you don't set the variable then it will default to `~/.vim/vui.json`
+Alternatively, you can save the config file as `~/.vim/vui.json`
 ## Example Configuration
 ``` json
 {
@@ -72,19 +72,20 @@ If you don't set the variable then it will default to `~/.vim/vui.json`
     - If no default is specified then `_disabled_` will be used
 
 # Completion
-vui reads from your config to suggest values for completion. It detects the argument in the current line you are editing and suggests only the values for that argument. This is done via vim's user defined completion (see `:h compl-function`)
-- While in insert mode `Ctrl-X Ctrl-U` activates the completion for the command argument of the line are you are on
+vui reads from the config to suggest values for completion. It detects the argument in the current line and suggests only the values for that argument. This is done via vim's user defined completion (see `:h compl-function`)
+- While in insert mode, `Ctrl-X Ctrl-U` activates the completion for the command argument of the current line
 - `Ctrl-N` moves to the **n**ext match and `Ctrl-P` moves to the **p**revious
-- Once you've selected your value you can keep typing or leave insert mode
 - The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
 
 # Commands
 ## Global Commands
-- `:VUI <vui_config_name>` :: This is the entrypoint to VUI
+- `:VUI <vui_config_name>`
+    - This is the entrypoint to VUI
     - Running this will open a VUI buffer for the specified tool
-    - Tab completion is supported for all your config-defined tools
+    - Tab completion is supported for all the config-defined tools
 ## VUI Buffer Commands
-- `:VUIOutputCommand` :: Outputs the command generated from the current VUI buffer
+- `:VUIOutputCommand`
+    - Outputs the command generated from the current VUI buffer
 - `:VUIExecuteCommand`
     - Generate the command from the buffer and then execute it from vim
 - `:VUIExecuteCommandAndReadOuput`
@@ -93,14 +94,19 @@ vui reads from your config to suggest values for completion. It detects the argu
     - Write the results in the current vui buffer into a user-specified file
 
 # Mappings
-All mappings are normal mode mappings. You can override each one by mapping to the corresponding `<Plug>` mapping. For example, `nmap <CR> <Plug>(vui-execute-command)` would allow you to run `VUIExecuteCommand` when you press enter.
+All mappings are normal mode mappings. Each mapping can be overridden with the corresponding `<Plug>` mapping. For example, `nmap <CR> <Plug>(vui-execute-command)` would run `VUIExecuteCommand` when enter is pressed.
 - `<localleader>o`
     - Same as `:VUIOutputCommand`
+    - `<Plug>(vui-output-command)`
 - `<localleader>e`
     - Same as `:VUIExecuteCommand`
+    - `<Plug>(vui-execute-command)`
 - `<localleader>r`
     - Same as `:VUIExecuteCommandAndReadOuput`
+    - `<Plug>(vui-execute-command-and-read)`
 - `<localleader>w`
     - Same as `:VUIWriteResults`
+    - `<Plug>(vui-write-results)`
 - `<localleader>c`
     - Delete the arg value in the current line and go into insert mode for quick value changes
+    - `<Plug>(vui-change-arg-for-line)`
