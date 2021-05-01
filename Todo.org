@@ -66,6 +66,10 @@
 - [X] check version
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
+- [ ] Make the autocomplete more convenient (tab)
+  - [ ] press enter to clear line and go into insert mode
+  - [ ] then press tab to go through options
+- [ ] press question mark for help (keymappings)
 - [-] Documentation
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
@@ -79,6 +83,7 @@
   - [ ] tab complete
   - [ ] display mappings
 - [ ] have the actual command in the buffer as well so user can edit it if needed
+- [ ] have config separated into different files in the same directory
 - [ ] conceal for syntax
 - [ ] cust formatting for executing output
 - [ ] multipart field?

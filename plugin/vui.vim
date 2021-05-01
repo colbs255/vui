@@ -103,25 +103,22 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Editing Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function VUIArgValueCompletion(findstart, base)
-    if a:findstart
-	    " locate the start of the word
-	    let line = getline('.')
-	    let start = col('.') - 1
-	    while start > 0 && line[start - 1] =~ '\S'
-	      let start -= 1
-	    endwhile
-	    return start
-    endif
-
+func s:AutoCompleteHandler()
+    " Cases
+    " typing a word
+    let line = getline('.')
+    let start = col('.') - 1
+    while start > 0 && line[start - 1] =~ '\S'
+      let start -= 1
+    endwhile
     let arg_pair = s:GetArgProperyFromLine()
     if empty(arg_pair)
-        return []
+        return ''
     endif
 
     let arg_node = s:GetInfoForArg(arg_pair[0])
     if empty(arg_node)
-        return []
+        return ''
     endif
 
     let arg_type = get(arg_node, 'type', 'string')
@@ -130,15 +127,24 @@ function VUIArgValueCompletion(findstart, base)
         call add(result, s:enabled_keyword)
     else
         let config_values = get(arg_node, 'values', [])
+        let base_str = strpart(line, start, col('.') - start)
+
         for elem in config_values
-            if elem =~ '^' . a:base
+            if elem =~ '^' . base_str
                 call add(result, elem)
             endif
         endfor
     endif
 
-    return add(result, s:disabled_keyword)
-endfunction
+    if empty(result)
+        return ''
+    endif
+
+    call add(result, s:disabled_keyword)
+    call complete(start + 1, result)
+    return ''
+endfunc
+
 
 function s:ChangeArgValueForLine()
     let pair = s:GetArgProperyFromLine()
@@ -257,46 +263,6 @@ noremap <Plug>(vui-write-results) :call VUIWriteResults()<CR>
 noremap <silent> <Plug>(vui-change-arg-for-line) :call <SID>ChangeArgValueForLine()<CR>
 noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
 
-inoremap <Tab> <C-R>=<SID>AutoCompleteHandler()<CR>
-func s:AutoCompleteHandler()
-    let line = getline('.')
-    let start = col('.') - 1
-    while start > 0 && line[start - 1] =~ '\S'
-      let start -= 1
-    endwhile
-
-    let arg_pair = s:GetArgProperyFromLine()
-    if empty(arg_pair)
-        return ''
-    endif
-
-    let arg_node = s:GetInfoForArg(arg_pair[0])
-    if empty(arg_node)
-        return ''
-    endif
-
-    let arg_type = get(arg_node, 'type', 'string')
-    let result = []
-    if arg_type == 'boolean'
-        call add(result, s:enabled_keyword)
-    else
-        let config_values = get(arg_node, 'values', [])
-        for elem in config_values
-            if elem =~ '^' . ''
-                call add(result, elem)
-            endif
-        endfor
-    endif
-
-    if empty(result)
-        return ''
-    endif
-
-    call add(result, s:disabled_keyword)
-    call complete(start, result)
-    return ''
-endfunc
-
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
 """""""""""""""""""""""""""""""""""""""""""
@@ -322,3 +288,21 @@ function s:UpdateVUI(vui_name)
     let b:current_vui_config = get(s:LoadVUIConfig(g:vui_config_file), a:vui_name, {})
     call s:PrintVUIBuffer(a:vui_name, b:current_vui_config)
 endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Section: Experimental
+"""""""""""""""""""""""""""""""""""""""""""
+nmap <CR> <Plug>(vui-change-arg-for-line)<C-R>=<SID>AutoCompleteHandler()<CR>
+inoremap <F5> <C-R>=<SID>AutoCompleteHandler()<CR>
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
