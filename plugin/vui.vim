@@ -257,6 +257,46 @@ noremap <Plug>(vui-write-results) :call VUIWriteResults()<CR>
 noremap <silent> <Plug>(vui-change-arg-for-line) :call <SID>ChangeArgValueForLine()<CR>
 noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
 
+inoremap <Tab> <C-R>=<SID>AutoCompleteHandler()<CR>
+func s:AutoCompleteHandler()
+    let line = getline('.')
+    let start = col('.') - 1
+    while start > 0 && line[start - 1] =~ '\S'
+      let start -= 1
+    endwhile
+
+    let arg_pair = s:GetArgProperyFromLine()
+    if empty(arg_pair)
+        return ''
+    endif
+
+    let arg_node = s:GetInfoForArg(arg_pair[0])
+    if empty(arg_node)
+        return ''
+    endif
+
+    let arg_type = get(arg_node, 'type', 'string')
+    let result = []
+    if arg_type == 'boolean'
+        call add(result, s:enabled_keyword)
+    else
+        let config_values = get(arg_node, 'values', [])
+        for elem in config_values
+            if elem =~ '^' . ''
+                call add(result, elem)
+            endif
+        endfor
+    endif
+
+    if empty(result)
+        return ''
+    endif
+
+    call add(result, s:disabled_keyword)
+    call complete(start, result)
+    return ''
+endfunc
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
 """""""""""""""""""""""""""""""""""""""""""
