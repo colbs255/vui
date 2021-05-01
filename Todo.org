@@ -68,15 +68,18 @@
   - [ ] might need a reverse args if the flag should appear first
 - [-] Documentation
   - [X] doc mappings
-  - [ ] add the vim version requirements (json dependency)
-  - [ ] some sort of ascii cast
+  - [X] add the vim version requirements (json dependency)
+  - [ ] some sort of ascii cast or pictures
 * Extra Features
+- [ ] allow user to add arguments on the fly (not already in config)
+- [ ] output the type as part of the argument (just a 2 character code)
 - [ ] use autoload
 - [ ] custom formatting for final arg output
 - [ ] easy mode setting
   - [ ] tab complete
   - [ ] display mappings
 - [ ] have the actual command in the buffer as well so user can edit it if needed
+- [ ] conceal for syntax
 - [ ] cust formatting for executing output
 - [ ] multipart field?
   + [ ] this can be used for a date (month, day, year)
@@ -87,6 +90,7 @@
 - [ ] ssh command support
 - [ ] time field
   + [ ] this could be a multifield
+  + [ ] increment/decrement
 - [ ] Make autocomplete faster, use the async thing you saw in help
 - [ ] substring matching (instead of first word)
 * Robustness

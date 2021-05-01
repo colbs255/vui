@@ -76,19 +76,21 @@ If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
 
 # Completion
 vui reads from the config to suggest values for completion. It detects the argument in the current line and suggests only the values for that argument. This is done via vim's user defined completion (see `:h compl-function`)
-- While in insert mode, `Ctrl-X Ctrl-U` activates the completion for the command argument of the current line
+- While in insert mode, `Ctrl-X Ctrl-U`(keep finger on `ctrl` and press `u` then `x`) activates the completion for the command argument of the current line
 - `Ctrl-N` moves to the **n**ext match and `Ctrl-P` moves to the **p**revious
 - The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
+## File Completion
+Similar to `Ctrl-X Ctrl-U`, you can press `Ctrl-X Ctrl-F` for file completion
 
 # Commands
 ## Global Commands
 - `:VUI <vui_config_name>`
-    - This is the entrypoint to VUI
-    - Running this will open a VUI buffer for the specified tool
+    - This is the entrypoint to vui
+    - Running this will open a vui buffer for the specified tool
     - Tab completion is supported for all the config-defined tools
 ## VUI Buffer Commands
 - `:VUIOutputCommand`
-    - Outputs the command generated from the current VUI buffer
+    - Outputs the command generated from the current vui buffer
 - `:VUIExecuteCommand`
     - Generate the command from the buffer and then execute it from vim
 - `:VUIExecuteCommandAndReadOuput`
