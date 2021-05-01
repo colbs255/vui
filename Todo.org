@@ -64,11 +64,17 @@
   - [X] use =<Plug>=
 - [X] syntax highlighting for command
 - [X] check version
-- [ ] Support commands that have "main" arguments like grep
-  - [ ] might need a reverse args if the flag should appear first
 - [ ] Make the autocomplete more convenient (tab)
   - [ ] press enter to clear line and go into insert mode
-  - [ ] then press tab to go through options
+    - [ ] have blank line so they can type then tab through
+  - [ ] then press tab/shift-tab to go through options
+  - [ ] need to be able to activate autocomplete while in insert mode
+  - [ ] clean up mappings
+  - [ ] allow users to customize this
+  - [ ] have this by default but have setting that disables the mappings
+  - [ ] filter while typing
+- [ ] Support commands that have "main" arguments like grep
+  - [ ] might need a reverse args if the flag should appear first
 - [ ] press question mark for help (keymappings)
 - [-] Documentation
   - [X] doc mappings
