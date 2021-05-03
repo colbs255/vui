@@ -145,7 +145,6 @@ func s:AutoCompleteHandler()
     return ''
 endfunc
 
-
 function s:ChangeArgValueForLine()
     let pair = s:GetArgProperyFromLine()
     if !empty(pair)
@@ -292,7 +291,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Experimental
 """""""""""""""""""""""""""""""""""""""""""
-nmap <CR> <Plug>(vui-change-arg-for-line)<C-R>=<SID>AutoCompleteHandler()<CR>
+nmap <CR> <Plug>(vui-change-arg-for-line)<C-R>=<SID>AutoCompleteHandler()<CR><C-p>
 inoremap <F5> <C-R>=<SID>AutoCompleteHandler()<CR>
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
