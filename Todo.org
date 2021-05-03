@@ -64,6 +64,7 @@
   - [X] use =<Plug>=
 - [X] syntax highlighting for command
 - [X] check version
+- [ ] fix regex
 - [ ] Make the autocomplete more convenient (tab)
   - [ ] press enter to clear line and go into insert mode
     - [ ] have blank line so they can type then tab through
