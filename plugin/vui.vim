@@ -1,6 +1,7 @@
 if exists("g:loaded_vui")
   finish
 endif
+
 if v:version < 800
     echoerr 'Vim 8 required for vui'
     finish
@@ -70,6 +71,7 @@ function s:PrintVUIBuffer(vui_name, vui_config)
     %delete
     call s:PrintVUIBufferHeader(a:vui_name, a:vui_config)
     call s:PrintVUIBufferArgs(a:vui_config)
+    call s:AppendLast(['', s:results_title])
 endfunction
 
 function s:PrintVUIBufferHeader(vui_name, vui_config)
@@ -97,15 +99,12 @@ function s:PrintVUIBufferArgs(vui_config)
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
         call s:AppendLast(s:FormatArgNameForBuffer(arg) . ' '  . arg_value)
     endfor
-    call s:AppendLast(['', s:results_title])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Editing Buffer
 """""""""""""""""""""""""""""""""""""""""""
 func s:AutoCompleteHandler()
-    " Cases
-    " typing a word
     let line = getline('.')
     let start = col('.') - 1
     while start > 0 && line[start - 1] =~ '\S'
@@ -145,8 +144,9 @@ func s:AutoCompleteHandler()
     return ''
 endfunc
 
-function s:ChangeArgValueForLine()
+function s:ClearArgValueForLine()
     let pair = s:GetArgProperyFromLine()
+    echom 'called'
     if !empty(pair)
         call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ')
         startinsert!
@@ -259,8 +259,12 @@ noremap <Plug>(vui-output-command) :call VUIOutputCommand()<CR>
 noremap <Plug>(vui-execute-command) :call VUIExecuteCommand()<CR>
 noremap <Plug>(vui-execute-command-and-read) :call VUIExecuteCommandAndReadOuput()<CR>
 noremap <Plug>(vui-write-results) :call VUIWriteResults()<CR>
-noremap <silent> <Plug>(vui-change-arg-for-line) :call <SID>ChangeArgValueForLine()<CR>
+
+noremap <silent> <Plug>(vui-clear-arg-for-line) :call <SID>ClearArgValueForLine()<CR>
 noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
+
+noremap <Plug>(vui-change-arg-for-line) :call <SID>ClearArgValueForLine()<CR><C-R>=<SID>AutoCompleteHandler()<CR><C-p>
+noremap <Plug>(vui-complete) <C-R>=<SID>AutoCompleteHandler()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
@@ -288,20 +292,3 @@ function s:UpdateVUI(vui_name)
     call s:PrintVUIBuffer(a:vui_name, b:current_vui_config)
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""
-" Section: Experimental
-"""""""""""""""""""""""""""""""""""""""""""
-nmap <CR> <Plug>(vui-change-arg-for-line)<C-R>=<SID>AutoCompleteHandler()<CR><C-p>
-inoremap <F5> <C-R>=<SID>AutoCompleteHandler()<CR>
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
-" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()

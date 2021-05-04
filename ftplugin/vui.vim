@@ -1,4 +1,3 @@
-setlocal completefunc=VUIArgValueCompletion
 setlocal buftype=nofile
 setlocal bufhidden=hide
 
@@ -9,13 +8,22 @@ command -buffer VUIWriteResults call VUIWriteResults()
 
 function s:MapDefault(keys, value)
     if !hasmapto(a:value)
-        execute 'nmap <buffer> <localleader>' . a:keys . ' ' . a:value
+        execute 'nmap <buffer> ' . a:keys . ' ' . a:value
     endif
 endfunction
 
-call s:MapDefault('o', '<Plug>(vui-output-command)')
-call s:MapDefault('e', '<Plug>(vui-execute-command)')
-call s:MapDefault('r', '<Plug>(vui-execute-command-and-read)')
-call s:MapDefault('w', '<Plug>(vui-write-results)')
-" call s:MapDefault('c', '<Plug>(vui-change-arg-for-line)')
-call s:MapDefault('t', '<Plug>(vui-toggle-arg)')
+function s:MapDefaultWithLocalLeader(keys, value)
+    call s:MapDefault('<localleader>' . a:keys, a:value)
+endfunction
+
+call s:MapDefaultWithLocalLeader('o', '<Plug>(vui-output-command)')
+call s:MapDefaultWithLocalLeader('e', '<Plug>(vui-execute-command)')
+call s:MapDefaultWithLocalLeader('r', '<Plug>(vui-execute-command-and-read)')
+call s:MapDefaultWithLocalLeader('w', '<Plug>(vui-write-results)')
+call s:MapDefaultWithLocalLeader('c', '<Plug>(vui-clear-arg-for-line)')
+call s:MapDefaultWithLocalLeader('t', '<Plug>(vui-toggle-arg)')
+call s:MapDefaultWithLocalLeader('<CR>', '<Plug>(vui-change-arg-for-line)')
+
+imap <expr><buffer> <F5> <Plug>(vui-complete)
+inoremap <buffer><silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <buffer><silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"

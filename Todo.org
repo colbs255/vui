@@ -64,7 +64,9 @@
   - [X] use =<Plug>=
 - [X] syntax highlighting for command
 - [X] check version
-- [ ] fix regex
+- [ ] make it save results instead of write results (w -> s)
+- [ ] fix regex search on matches
+- [ ] keep searching on backspace (look at COC)
 - [ ] Make the autocomplete more convenient (tab)
   - [ ] press enter to clear line and go into insert mode
     - [ ] have blank line so they can type then tab through
