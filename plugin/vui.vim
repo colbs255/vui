@@ -146,7 +146,6 @@ endfunc
 
 function s:ClearArgValueForLine()
     let pair = s:GetArgProperyFromLine()
-    echom 'called'
     if !empty(pair)
         call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ')
         startinsert!
@@ -264,7 +263,7 @@ noremap <silent> <Plug>(vui-clear-arg-for-line) :call <SID>ClearArgValueForLine(
 noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
 
 noremap <Plug>(vui-change-arg-for-line) :call <SID>ClearArgValueForLine()<CR><C-R>=<SID>AutoCompleteHandler()<CR><C-p>
-noremap <Plug>(vui-complete) <C-R>=<SID>AutoCompleteHandler()<CR>
+inoremap <Plug>(vui-complete) <C-R>=<SID>AutoCompleteHandler()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point

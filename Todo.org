@@ -66,16 +66,17 @@
 - [X] check version
 - [ ] make it save results instead of write results (w -> s)
 - [ ] fix regex search on matches
-- [ ] keep searching on backspace (look at COC)
-- [ ] Make the autocomplete more convenient (tab)
-  - [ ] press enter to clear line and go into insert mode
-    - [ ] have blank line so they can type then tab through
-  - [ ] then press tab/shift-tab to go through options
+- [-] Make the autocomplete more convenient (tab)
+  - [X] press enter to clear line and go into insert mode
+    - [X] have blank line so they can type then tab through
+  - [X] then press tab/shift-tab to go through options
   - [ ] need to be able to activate autocomplete while in insert mode
-  - [ ] clean up mappings
-  - [ ] allow users to customize this
+  - [X] clean up mappings
+  - [X] allow users to customize this
   - [ ] have this by default but have setting that disables the mappings
   - [ ] filter while typing
+  - [ ] keep searching on backspace (look at COC)
+  - [ ] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
 - [ ] press question mark for help (keymappings)
@@ -85,6 +86,7 @@
   - [ ] some sort of ascii cast or pictures
 * Extra Features
 - [ ] allow user to add arguments on the fly (not already in config)
+- [ ] define sections for movement
 - [ ] output the type as part of the argument (just a 2 character code)
 - [ ] use autoload
 - [ ] custom formatting for final arg output

@@ -24,6 +24,7 @@ call s:MapDefaultWithLocalLeader('c', '<Plug>(vui-clear-arg-for-line)')
 call s:MapDefaultWithLocalLeader('t', '<Plug>(vui-toggle-arg)')
 call s:MapDefaultWithLocalLeader('<CR>', '<Plug>(vui-change-arg-for-line)')
 
-imap <expr><buffer> <F5> <Plug>(vui-complete)
+" NEED HASMAPTO
+imap <buffer> <F5> <Plug>(vui-complete)
 inoremap <buffer><silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <buffer><silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
