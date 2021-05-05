@@ -1,10 +1,16 @@
 # vui
-vui (**v**im **u**ser **i**nterface) is a vim plugin that serves as a low-level frontend to your command line tools by allowing you to quickly edit arguments and execute the commands directly from vim
+vui (**v**im **u**ser **i**nterface) is a vim plugin that serves as a lightweight frontend to your command line tools by allowing you to quickly edit arguments and execute the commands directly from vim
 
-Some command line tools have many arguments and are a hastle to remember and edit. vui allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using vim completion, and then run the command directly from vim. vui can also print the results directly into the vim buffer and save it to a file.
+Some command line tools have many arguments and are a hastle to remember and edit. vui allows you to quickly select the command line tool you want, edit the arguments in a vim buffer using vim completion, and then run the command directly from vim. vui can also print the results directly into the vim buffer and save them to a file.
 
-# Requirements
-Vim 8
+# Installation
+- Requires vim 8
+- Can install with any plugin manager
+- Can also manually install via vim 8's package system
+``` shell
+git clone https://github.com/colbs255/vui ~/.vim/pack/plugins/start/vui
+```
+
 
 # Configuration
 vui reads from a json file to figure out which command to run, what arguments to display, and what values can be completed.
@@ -75,12 +81,13 @@ If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
     - If no default is specified then `_disabled_` will be used
 
 # Completion
-vui reads from the config to suggest values for completion. It detects the argument in the current line and suggests only the values for that argument. This is done via vim's user defined completion (see `:h compl-function`)
-- While in insert mode, `Ctrl-X Ctrl-U`(keep finger on `ctrl` and press `u` then `x`) activates the completion for the command argument of the current line
+vui reads from the config to suggest values for completion. It detects the argument in the current line and suggests only the values for that argument.
+- See the mappings section for how to activate argument completion
 - `Ctrl-N` moves to the **n**ext match and `Ctrl-P` moves to the **p**revious
+    - `Tab` and `Shift-Tab` can also be used
 - The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
 ## File Completion
-Similar to `Ctrl-X Ctrl-U`, you can press `Ctrl-X Ctrl-F` for file completion
+You can press `Ctrl-X Ctrl-F` while in insert mode for file completion
 
 # Commands
 ## Global Commands
@@ -95,11 +102,21 @@ Similar to `Ctrl-X Ctrl-U`, you can press `Ctrl-X Ctrl-F` for file completion
     - Generate the command from the buffer and then execute it from vim
 - `:VUIExecuteCommandAndReadOuput`
     - Same as `VUIExecuteCommand` but read the output into the vui buffer instead
-- `:VUIWriteResults`
-    - Write the results in the current vui buffer into a user-specified file
+- `:VUISaveResults`
+    - Save the results in the current vui buffer into a user-specified file
 
 # Mappings
-All mappings are normal mode mappings. Each mapping can be overridden with the corresponding `<Plug>` mapping. For example, `nmap <CR> <Plug>(vui-execute-command)` would run `VUIExecuteCommand` when enter is pressed.
+Each mapping can be overridden with the corresponding `<Plug>` mapping. For example, `nmap <CR> <Plug>(vui-execute-command)` would run `VUIExecuteCommand` when enter is pressed.
+## Normal Mode
+- `<localleader>enter`
+    - Delete the arg value in the current line, go into insert mode and activate autocomplete - useful for quick changes
+    - `<Plug>(vui-change-arg-for-line)`
+- `<localleader>c`
+    - Same as `<Plug>(vui-change-arg-for-line)` but don't activate autocomplete
+    - `<Plug>(vui-clear-arg-for-line)`
+- `<localleader>t`
+    - Toggle the arg value in the current line. Enabled will switch to disabled and vice versa
+    - `<Plug>(vui-toggle-arg)`
 - `<localleader>o`
     - Same as `:VUIOutputCommand`
     - `<Plug>(vui-output-command)`
@@ -109,12 +126,9 @@ All mappings are normal mode mappings. Each mapping can be overridden with the c
 - `<localleader>r`
     - Same as `:VUIExecuteCommandAndReadOuput`
     - `<Plug>(vui-execute-command-and-read)`
-- `<localleader>w`
-    - Same as `:VUIWriteResults`
-    - `<Plug>(vui-write-results)`
-- `<localleader>c`
-    - Delete the arg value in the current line and go into insert mode for quick value changes
-    - `<Plug>(vui-change-arg-for-line)`
-- `<localleader>t`
-    - Toggle the arg value in the current line. Enabled will switch to disabled and vice versa
-    - `<Plug>(vui-toggle-arg)`
+- `<localleader>s`
+    - Same as `:VUISaveResults`
+    - `<Plug>(vui-save-results)`
+## Insert Mode
+- `F5`
+    - Activate autocomplete for the current line
