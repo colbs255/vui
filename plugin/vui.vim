@@ -64,6 +64,10 @@ function s:FormatArgNameForBuffer(arg_name)
     return ':' . a:arg_name . ':'
 endfunction
 
+function s:IsPrefix(str, prefix)
+    return stridx(a:str, a:prefix) == 0
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
@@ -129,7 +133,7 @@ func s:AutoCompleteHandler()
         let base_str = strpart(line, start, col('.') - start)
 
         for elem in config_values
-            if elem =~ '^' . base_str
+            if s:IsPrefix(elem, base_str)
                 call add(result, elem)
             endif
         endfor
@@ -274,7 +278,7 @@ function s:GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)
     let vui_dict = s:LoadVUIConfig(g:vui_config_file)
     let result = []
     for k in keys(vui_dict)
-        if k =~ '^' . a:ArgLead
+        if s:IsPrefix(k, a:ArgLead)
             call add(result, k)
         endif
     endfor

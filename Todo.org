@@ -66,6 +66,8 @@
 - [X] check version
 - [X] make it save results instead of write results (w -> s)
 - [ ] fix regex search on matches
+  + [ ] use `==#` (matchcase) instead of `==`
+  + [ ] the period disables it, try iskeyword?..
 - [-] Make the autocomplete more convenient (tab)
   - [X] press enter to clear line and go into insert mode
     - [X] have blank line so they can type then tab through
@@ -80,6 +82,7 @@
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
 - [ ] press question mark for help (keymappings)
+  + [ ] look into vim menu thing
 - [-] Documentation
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
