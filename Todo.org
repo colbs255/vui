@@ -70,10 +70,10 @@
   - [X] press enter to clear line and go into insert mode
     - [X] have blank line so they can type then tab through
   - [X] then press tab/shift-tab to go through options
-  - [ ] need to be able to activate autocomplete while in insert mode
+  - [X] need to be able to activate autocomplete while in insert mode
   - [X] clean up mappings
   - [X] allow users to customize this
-  - [ ] have this by default but have setting that disables the mappings
+  - [X] have this by default but have setting that disables the mappings
   - [ ] filter while typing
   - [ ] keep searching on backspace (look at COC)
   - [ ] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
