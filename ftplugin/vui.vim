@@ -19,7 +19,7 @@ endfunction
 call s:MapDefaultWithLocalLeader('o', '<Plug>(vui-output-command)')
 call s:MapDefaultWithLocalLeader('e', '<Plug>(vui-execute-command)')
 call s:MapDefaultWithLocalLeader('r', '<Plug>(vui-execute-command-and-read)')
-call s:MapDefaultWithLocalLeader('w', '<Plug>(vui-write-results)')
+call s:MapDefaultWithLocalLeader('s', '<Plug>(vui-save-results)')
 call s:MapDefaultWithLocalLeader('c', '<Plug>(vui-clear-arg-for-line)')
 call s:MapDefaultWithLocalLeader('t', '<Plug>(vui-toggle-arg)')
 call s:MapDefaultWithLocalLeader('<CR>', '<Plug>(vui-change-arg-for-line)')

@@ -43,7 +43,7 @@ function s:GetArgProperyFromLine()
     return [arg_name, arg_value]
 endfunction
 
-function s:WriteResultsToFile(file_name)
+function s:SaveResultsToFile(file_name)
     call cursor(1,1)
     if search('^' . s:results_title, 'W')
         execute '.,$write! ' . a:file_name
@@ -246,9 +246,9 @@ function VUIExecuteCommandAndReadOuput()
     call s:AppendLast('')
 endfunction
 
-function VUIWriteResults()
+function VUISaveResults()
     let file_name = input('Enter file name: ', '', 'file')
-    call s:WriteResultsToFile(file_name)
+    call s:SaveResultsToFile(file_name)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -257,7 +257,7 @@ endfunction
 noremap <Plug>(vui-output-command) :call VUIOutputCommand()<CR>
 noremap <Plug>(vui-execute-command) :call VUIExecuteCommand()<CR>
 noremap <Plug>(vui-execute-command-and-read) :call VUIExecuteCommandAndReadOuput()<CR>
-noremap <Plug>(vui-write-results) :call VUIWriteResults()<CR>
+noremap <Plug>(vui-save-results) :call VUISaveResults()<CR>
 
 noremap <silent> <Plug>(vui-clear-arg-for-line) :call <SID>ClearArgValueForLine()<CR>
 noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>

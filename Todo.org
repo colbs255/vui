@@ -64,7 +64,7 @@
   - [X] use =<Plug>=
 - [X] syntax highlighting for command
 - [X] check version
-- [ ] make it save results instead of write results (w -> s)
+- [X] make it save results instead of write results (w -> s)
 - [ ] fix regex search on matches
 - [-] Make the autocomplete more convenient (tab)
   - [X] press enter to clear line and go into insert mode
