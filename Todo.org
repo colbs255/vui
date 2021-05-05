@@ -5,8 +5,8 @@
   + [ ] filter while typing
   + [ ] keep searching on backspace (look at COC)
   + [ ] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
-- [ ] fix regex search on matches
-  + [ ] use `==#` (matchcase) instead of `==`
+- [-] fix regex search on matches
+  + [X] use `==#` (matchcase) instead of `==`
   + [ ] the period disables it, try iskeyword?..
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first

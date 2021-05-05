@@ -126,7 +126,7 @@ func s:AutoCompleteHandler()
 
     let arg_type = get(arg_node, 'type', 'string')
     let result = []
-    if arg_type == 'boolean'
+    if arg_type ==? 'boolean'
         call add(result, s:enabled_keyword)
     else
         let config_values = get(arg_node, 'values', [])
@@ -169,10 +169,10 @@ function s:ToggleArgForLine()
         let arg_node = s:GetInfoForArg(pair[0])
         let current_value = pair[1]
         let type = get(arg_node, 'type', 'string')
-        if type == 'boolean'
-            let new_value = current_value == s:disabled_keyword ? s:enabled_keyword : s:disabled_keyword
+        if type ==? 'boolean'
+            let new_value = current_value ==# s:disabled_keyword ? s:enabled_keyword : s:disabled_keyword
         else
-            let new_value = current_value == s:disabled_keyword ? "" : s:disabled_keyword
+            let new_value = current_value ==# s:disabled_keyword ? "" : s:disabled_keyword
         endif
     endif
     call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ' . new_value)
@@ -199,11 +199,11 @@ function s:GenerateCommand(vui_config)
         let arg_node = config_args[k]
         let arg_type = get(arg_node, 'type', 'string')
 
-        if arg_type == 'boolean'
-            if v == s:enabled_keyword
+        if arg_type ==? 'boolean'
+            if v ==# s:enabled_keyword
                 call add(components, prefix . k)
             endif
-        elseif arg_type == 'string'
+        elseif arg_type ==? 'string'
             if v != s:disabled_keyword
                 call add(components, prefix . k . ' ' . v)
             endif
