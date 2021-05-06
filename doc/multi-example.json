@@ -11,7 +11,7 @@
             },
             "region": {
                 "type": "string",
-                "values": ["US", "EU", "ASIA", "abcdefghijklmnopqrst", "abc", "abcd", "abcdef"],
+                "values": ["US", "EU", "ASIA"],
                 "default": "US"
             },
             "startTime": {
