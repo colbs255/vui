@@ -1,10 +1,10 @@
 #+TITLE: Todo
 
 * [ ] Core Features
-- [ ] Better autocomplete experience
+- [-] Better autocomplete experience
   + [ ] filter while typing
   + [ ] keep searching on backspace (look at COC)
-  + [ ] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
+  + [X] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
 - [-] fix regex search on matches
   + [X] use `==#` (matchcase) instead of `==`
   + [ ] the period disables it, try iskeyword?..
@@ -20,7 +20,7 @@
   - [X] press enter to clear line and go into insert mode
     - [X] have blank line so they can type then tab through
   - [X] then press tab/shift-tab to go through options
-  - [X] need to be able to activate autocomplete while in insert mode
+  - [X] need to be able to activate autocomplete while in insert mode via tab
   - [X] clean up mappings
   - [X] allow users to customize this
   - [X] have this by default but have setting that disables the mappings
@@ -95,6 +95,7 @@
 - [ ] output the type as part of the argument (just a 2 character code)
 - [ ] use autoload
 - [ ] custom formatting for final arg output
+- [ ] allow user to make their own tab mappings
 - [ ] have the actual command in the buffer as well so user can edit it if needed
 - [ ] have config separated into different files in the same directory
 - [ ] conceal for syntax

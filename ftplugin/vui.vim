@@ -22,8 +22,10 @@ call s:MapDefaultWithLocalLeader('r', '<Plug>(vui-execute-command-and-read)')
 call s:MapDefaultWithLocalLeader('s', '<Plug>(vui-save-results)')
 call s:MapDefaultWithLocalLeader('c', '<Plug>(vui-clear-arg-for-line)')
 call s:MapDefaultWithLocalLeader('t', '<Plug>(vui-toggle-arg)')
-call s:MapDefaultWithLocalLeader('<CR>', '<Plug>(vui-change-arg-for-line)')
+call s:MapDefault('<CR>', '<Plug>(vui-change-arg-for-line)', 'n')
 
-call s:MapDefault('<F5>', '<Plug>(vui-complete)', 'i')
-inoremap <buffer><silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <buffer><silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Tab for complete if on arg line, tab through completion results, normal tab otherwise
+imap <buffer><expr><silent> <TAB> pumvisible()
+            \ ? "\<C-n>"
+            \ : VUIIsArgLine() ? "<Plug>(vui-complete)" : "\<TAB>"
+inoremap <buffer><expr><silent> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"

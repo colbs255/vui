@@ -11,7 +11,6 @@ Some command line tools have many arguments and are a hastle to remember and edi
 git clone https://github.com/colbs255/vui ~/.vim/pack/plugins/start/vui
 ```
 
-
 # Configuration
 vui reads from a json file to figure out which command to run, what arguments to display, and what values can be completed.
 
@@ -83,8 +82,8 @@ If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
 # Completion
 vui reads from the config to suggest values for completion. It detects the argument in the current line and suggests only the values for that argument.
 - See the mappings section for how to activate argument completion
-- `Ctrl-N` moves to the **n**ext match and `Ctrl-P` moves to the **p**revious
-    - `Tab` and `Shift-Tab` can also be used
+- `Tab` moves to the next match and `Shift-Tab` moves to the previous match
+    - `Ctrl-N` and `Ctrl-P` can also be used
 - The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
 ## File Completion
 You can press `Ctrl-X Ctrl-F` while in insert mode for file completion
@@ -130,5 +129,6 @@ Each mapping can be overridden with the corresponding `<Plug>` mapping. For exam
     - Same as `:VUISaveResults`
     - `<Plug>(vui-save-results)`
 ## Insert Mode
-- `F5`
+- `Tab`
     - Activate autocomplete for the current line
+    - `<Plug>(vui-complete)`

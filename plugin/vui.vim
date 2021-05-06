@@ -68,6 +68,13 @@ function s:IsPrefix(str, prefix)
     return stridx(a:str, a:prefix) == 0
 endfunction
 
+function VUIIsArgLine()
+    " Checks if current line is argument line
+    " Useful for mappings, user can change key functionality based on what
+    " line they are on
+    return !empty(s:GetArgProperyFromLine())
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
