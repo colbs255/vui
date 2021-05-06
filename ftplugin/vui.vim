@@ -24,6 +24,9 @@ call s:MapDefaultWithLocalLeader('c', '<Plug>(vui-clear-arg-for-line)')
 call s:MapDefaultWithLocalLeader('t', '<Plug>(vui-toggle-arg)')
 call s:MapDefault('<CR>', '<Plug>(vui-change-arg-for-line)', 'n')
 
+" Enter to select from completion else normal enter
+inoremap <buffer><expr><silent> <CR> pumvisible() ? "\<C-y>\<ESC>"
+            \ : "\<CR>"
 " Tab for complete if on arg line, tab through completion results, normal tab otherwise
 imap <buffer><expr><silent> <TAB> pumvisible()
             \ ? "\<C-n>"

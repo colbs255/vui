@@ -84,6 +84,7 @@ vui reads from the config to suggest values for completion. It detects the argum
 - See the mappings section for how to activate argument completion
 - `Tab` moves to the next match and `Shift-Tab` moves to the previous match
     - `Ctrl-N` and `Ctrl-P` can also be used
+- While in completion mode, press enter to select the current option and go back into normal mode
 - The completion menu will always have `_disabled_` as an option. This means the arg won't appear in the command output
 ## File Completion
 You can press `Ctrl-X Ctrl-F` while in insert mode for file completion
