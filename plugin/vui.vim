@@ -1,6 +1,7 @@
 if exists("g:loaded_vui")
   finish
 endif
+
 if v:version < 800
     echoerr 'Vim 8 required for vui'
     finish
@@ -42,7 +43,7 @@ function s:GetArgProperyFromLine()
     return [arg_name, arg_value]
 endfunction
 
-function s:WriteResultsToFile(file_name)
+function s:SaveResultsToFile(file_name)
     call cursor(1,1)
     if search('^' . s:results_title, 'W')
         execute '.,$write! ' . a:file_name
@@ -63,6 +64,17 @@ function s:FormatArgNameForBuffer(arg_name)
     return ':' . a:arg_name . ':'
 endfunction
 
+function s:IsPrefix(str, prefix)
+    return stridx(a:str, a:prefix) == 0
+endfunction
+
+function VUIIsArgLine()
+    " Checks if current line is argument line
+    " Useful for mappings, user can change key functionality based on what
+    " line they are on
+    return !empty(s:GetArgProperyFromLine())
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
@@ -70,6 +82,7 @@ function s:PrintVUIBuffer(vui_name, vui_config)
     %delete
     call s:PrintVUIBufferHeader(a:vui_name, a:vui_config)
     call s:PrintVUIBufferArgs(a:vui_config)
+    call s:AppendLast(['', s:results_title])
 endfunction
 
 function s:PrintVUIBufferHeader(vui_name, vui_config)
@@ -97,50 +110,52 @@ function s:PrintVUIBufferArgs(vui_config)
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
         call s:AppendLast(s:FormatArgNameForBuffer(arg) . ' '  . arg_value)
     endfor
-    call s:AppendLast(['', s:results_title])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Editing Buffer
 """""""""""""""""""""""""""""""""""""""""""
-function VUIArgValueCompletion(findstart, base)
-    if a:findstart
-	    " locate the start of the word
-	    let line = getline('.')
-	    let start = col('.') - 1
-	    while start > 0 && line[start - 1] =~ '\S'
-	      let start -= 1
-	    endwhile
-	    return start
-    endif
-
+func s:AutoCompleteHandler()
+    let line = getline('.')
+    let start = col('.') - 1
+    while start > 0 && line[start - 1] =~ '\S'
+      let start -= 1
+    endwhile
     let arg_pair = s:GetArgProperyFromLine()
     if empty(arg_pair)
-        return []
+        return ''
     endif
 
     let arg_node = s:GetInfoForArg(arg_pair[0])
     if empty(arg_node)
-        return []
+        return ''
     endif
 
     let arg_type = get(arg_node, 'type', 'string')
     let result = []
-    if arg_type == 'boolean'
+    if arg_type ==? 'boolean'
         call add(result, s:enabled_keyword)
     else
         let config_values = get(arg_node, 'values', [])
+        let base_str = strpart(line, start, col('.') - start)
+
         for elem in config_values
-            if elem =~ '^' . a:base
+            if s:IsPrefix(elem, base_str)
                 call add(result, elem)
             endif
         endfor
     endif
 
-    return add(result, s:disabled_keyword)
-endfunction
+    if empty(result)
+        return ''
+    endif
 
-function s:ChangeArgValueForLine()
+    call add(result, s:disabled_keyword)
+    call complete(start + 1, result)
+    return ''
+endfunc
+
+function s:ClearArgValueForLine()
     let pair = s:GetArgProperyFromLine()
     if !empty(pair)
         call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ')
@@ -161,10 +176,10 @@ function s:ToggleArgForLine()
         let arg_node = s:GetInfoForArg(pair[0])
         let current_value = pair[1]
         let type = get(arg_node, 'type', 'string')
-        if type == 'boolean'
-            let new_value = current_value == s:disabled_keyword ? s:enabled_keyword : s:disabled_keyword
+        if type ==? 'boolean'
+            let new_value = current_value ==# s:disabled_keyword ? s:enabled_keyword : s:disabled_keyword
         else
-            let new_value = current_value == s:disabled_keyword ? "" : s:disabled_keyword
+            let new_value = current_value ==# s:disabled_keyword ? "" : s:disabled_keyword
         endif
     endif
     call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ' . new_value)
@@ -191,11 +206,11 @@ function s:GenerateCommand(vui_config)
         let arg_node = config_args[k]
         let arg_type = get(arg_node, 'type', 'string')
 
-        if arg_type == 'boolean'
-            if v == s:enabled_keyword
+        if arg_type ==? 'boolean'
+            if v ==# s:enabled_keyword
                 call add(components, prefix . k)
             endif
-        elseif arg_type == 'string'
+        elseif arg_type ==? 'string'
             if v != s:disabled_keyword
                 call add(components, prefix . k . ' ' . v)
             endif
@@ -242,9 +257,9 @@ function VUIExecuteCommandAndReadOuput()
     call s:AppendLast('')
 endfunction
 
-function VUIWriteResults()
+function VUISaveResults()
     let file_name = input('Enter file name: ', '', 'file')
-    call s:WriteResultsToFile(file_name)
+    call s:SaveResultsToFile(file_name)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -253,9 +268,13 @@ endfunction
 noremap <Plug>(vui-output-command) :call VUIOutputCommand()<CR>
 noremap <Plug>(vui-execute-command) :call VUIExecuteCommand()<CR>
 noremap <Plug>(vui-execute-command-and-read) :call VUIExecuteCommandAndReadOuput()<CR>
-noremap <Plug>(vui-write-results) :call VUIWriteResults()<CR>
-noremap <silent> <Plug>(vui-change-arg-for-line) :call <SID>ChangeArgValueForLine()<CR>
+noremap <Plug>(vui-save-results) :call VUISaveResults()<CR>
+
+noremap <silent> <Plug>(vui-clear-arg-for-line) :call <SID>ClearArgValueForLine()<CR>
 noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
+
+noremap <Plug>(vui-change-arg-for-line) :call <SID>ClearArgValueForLine()<CR><C-R>=<SID>AutoCompleteHandler()<CR><C-p>
+inoremap <Plug>(vui-complete) <C-R>=<SID>AutoCompleteHandler()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
@@ -266,7 +285,7 @@ function s:GetVUIsCompletionFunction(ArgLead, CmdLine, CursoPos)
     let vui_dict = s:LoadVUIConfig(g:vui_config_file)
     let result = []
     for k in keys(vui_dict)
-        if k =~ '^' . a:ArgLead
+        if s:IsPrefix(k, a:ArgLead)
             call add(result, k)
         endif
     endfor
@@ -282,3 +301,4 @@ function s:UpdateVUI(vui_name)
     let b:current_vui_config = get(s:LoadVUIConfig(g:vui_config_file), a:vui_name, {})
     call s:PrintVUIBuffer(a:vui_name, b:current_vui_config)
 endfunction
+

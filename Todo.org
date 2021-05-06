@@ -1,6 +1,29 @@
 #+TITLE: Todo
 
 * [ ] Core Features
+- [-] Better autocomplete experience
+  + [ ] filter while typing
+  + [ ] keep searching on backspace (look at COC)
+  + [X] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
+- [-] fix regex search on matches
+  + [X] use `==#` (matchcase) instead of `==`
+  + [ ] the period disables it, try iskeyword?..
+- [ ] Support commands that have "main" arguments like grep
+  - [ ] might need a reverse args if the flag should appear first
+- [ ] press question mark for help (keymappings)
+  + [ ] look into vim menu thing
+- [-] Documentation
+  - [X] doc mappings
+  - [X] add the vim version requirements (json dependency)
+  - [ ] some sort of ascii cast or pictures
+- [X] Make the autocomplete more convenient (tab)
+  - [X] press enter to clear line and go into insert mode
+    - [X] have blank line so they can type then tab through
+  - [X] then press tab/shift-tab to go through options
+  - [X] need to be able to activate autocomplete while in insert mode via tab
+  - [X] clean up mappings
+  - [X] allow users to customize this
+  - [X] have this by default but have setting that disables the mappings
 - [X] Read from config file
   + [X] JSON decoder
   + [X] validation?
@@ -64,21 +87,17 @@
   - [X] use =<Plug>=
 - [X] syntax highlighting for command
 - [X] check version
-- [ ] Support commands that have "main" arguments like grep
-  - [ ] might need a reverse args if the flag should appear first
-- [-] Documentation
-  - [X] doc mappings
-  - [X] add the vim version requirements (json dependency)
-  - [ ] some sort of ascii cast or pictures
+- [X] make it save results instead of write results (w -> s)
 * Extra Features
 - [ ] allow user to add arguments on the fly (not already in config)
+- [ ] press question mark for help
+- [ ] define sections for movement
 - [ ] output the type as part of the argument (just a 2 character code)
 - [ ] use autoload
 - [ ] custom formatting for final arg output
-- [ ] easy mode setting
-  - [ ] tab complete
-  - [ ] display mappings
+- [ ] allow user to make their own tab mappings
 - [ ] have the actual command in the buffer as well so user can edit it if needed
+- [ ] have config separated into different files in the same directory
 - [ ] conceal for syntax
 - [ ] cust formatting for executing output
 - [ ] multipart field?
