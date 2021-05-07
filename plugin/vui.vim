@@ -197,26 +197,32 @@ function s:GenerateCommand(vui_config)
     let components = [a:vui_config['command']]
     let prefix = "--"
     let config_args = a:vui_config['args']
-    for [k,v] in items(args_dict)
-        if !has_key(config_args, k)
-            echom "No config defined for " . k
+    for arg in a:vui_config['args-order']
+        if !has_key(args_dict, arg)
+            " User may have removed arg in file
             continue
         endif
 
-        let arg_node = config_args[k]
+        if !has_key(config_args, arg)
+            echom "No config defined for " . arg
+            continue
+        endif
+
+        let arg_node = config_args[arg]
+        let v = args_dict[arg]
         let arg_type = get(arg_node, 'type', 'string')
 
         if arg_type ==? 'boolean'
             if v ==# s:enabled_keyword
-                call add(components, prefix . k)
+                call add(components, prefix . arg)
             endif
         elseif arg_type ==? 'string'
             if v != s:disabled_keyword
-                call add(components, prefix . k . ' ' . v)
+                call add(components, prefix . arg . ' ' . v)
             endif
         else
-            echom 'Invalid type for ' . k . ' defaulting to string'
-            call add(components, prefix . k . ' ' . v)
+            echom 'Invalid type for ' . arg . ' defaulting to string'
+            call add(components, prefix . arg . ' ' . v)
         endif
     endfor
     return join(components, " ")    
