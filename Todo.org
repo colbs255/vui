@@ -88,14 +88,16 @@
 - [X] syntax highlighting for command
 - [X] check version
 - [X] make it save results instead of write results (w -> s)
+- [X] allow user to make their own tab mappings
 * Extra Features
 - [ ] allow user to add arguments on the fly (not already in config)
+- [ ] Allow values to be read from separate file
+- [ ] Allow values to be generated from expression
 - [ ] press question mark for help
 - [ ] define sections for movement
 - [ ] output the type as part of the argument (just a 2 character code)
 - [ ] use autoload
 - [ ] custom formatting for final arg output
-- [ ] allow user to make their own tab mappings
 - [ ] have the actual command in the buffer as well so user can edit it if needed
 - [ ] have config separated into different files in the same directory
 - [ ] conceal for syntax
@@ -117,7 +119,7 @@
 - [ ] use same regex for higlgithing and searching
 - [ ] use shellescape() vim function when executing command
 - [ ] only read args inside an arg section
-- [ ] Put all of the state in the buffer itself rather than saving in memory
+- [ ] Put all of the state in the buffer itself rather than saving in memory (not sure about this one)
   - [ ] have the type in the field
   - [ ] somehow have the values
   - [ ] have the command listed as well
