@@ -76,7 +76,7 @@ function VUIIsArgLine()
 endfunction
 
 function s:EvalArgValueGenerator(expression)
-    " s:EvalArgValueGenerator('(0,5,1) -> strftime("%Y-%m-%d", localtime() - v:val*24*60*60)')
+    " Example: '(0,5,1) -> strftime("%Y-%m-%d", localtime() - v:val*24*60*60)'
     let range_and_expression_regex = '\v\s*\((.*)\)\s+-\>\s+(.*)\s*'
     let inner_number_regex = '\s*(-?\d+)\s*'
     let range_splitter_regex = '\v'
@@ -84,6 +84,10 @@ function s:EvalArgValueGenerator(expression)
 
     let [range_secion, user_expression] = matchlist(a:expression, range_and_expression_regex)[1:2]
     let range_split = matchlist(range_secion, range_splitter_regex)
+    if len(range_split) < 4
+        echoerr 'Must specify range in format (start, end, step)'
+        return []
+    endif
     let range = {'start': range_split[1], 'end': range_split[2], 'step': range_split[3]}
 
     return s:EvalLoop(range, user_expression, 'v:val')
