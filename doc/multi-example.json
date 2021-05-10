@@ -2,7 +2,7 @@
     "JavaCLI": {
         "description": "Get data from website in specific region of world",
         "command": "java -jar ~/SampleCLI.jar",
-        "args-order": ["src", "region", "startTime", "binary"],
+        "args-order": ["src", "region", "startTime", "binary", "partition"],
         "args": {
             "src": {
                 "type": "string",
@@ -21,6 +21,9 @@
             "binary": {
                 "type": "boolean",
                 "default": "_enabled_"
+            },
+            "partition": {
+                "values": "(0,11,1) -> v:val"
             }
         }
     },
