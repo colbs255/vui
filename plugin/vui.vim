@@ -82,7 +82,13 @@ function s:EvalArgValueGenerator(expression)
     let range_splitter_regex = '\v'
                 \ . inner_number_regex . ',' . inner_number_regex . ',' . inner_number_regex
 
-    let [range_secion, user_expression] = matchlist(a:expression, range_and_expression_regex)[1:2]
+    let main_match = matchlist(a:expression, range_and_expression_regex)
+    if len(main_match) < 3
+        echoerr "Invalid generator expression '" . a:expression . "'. Should be in format: '(start, end, step) -> expression'"
+        return []
+    endif
+
+    let [range_secion, user_expression] = main_match[1:2]
     let range_split = matchlist(range_secion, range_splitter_regex)
     if len(range_split) < 4
         echoerr 'Must specify range in format (start, end, step)'
