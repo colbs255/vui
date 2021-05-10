@@ -22,3 +22,5 @@ function s:EvalLoop(range, expression, placeholder)
     endwhile
     return result
 endfunction
+
+echo s:EvalArgValueGenerator('(0,5,1) -> strftime("%Y-%m-%d", localtime() - v:val*24*60*60)')

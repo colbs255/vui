@@ -12,6 +12,7 @@
   - [ ] might need a reverse args if the flag should appear first
 - [ ] press question mark for help (keymappings)
   + [ ] look into vim menu thing
+- [ ] Error messages instead of echos
 - [-] Documentation
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
