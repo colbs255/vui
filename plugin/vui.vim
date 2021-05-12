@@ -111,6 +111,18 @@ function s:EvalLoop(range, expression, placeholder)
     return result
 endfunction
 
+function s:ParseArgsFromString(str, parse_config)
+    let result = {}
+    for [name, regex] in items(parse_config)
+        let matches = matchlist(str, '\v' . regex)
+        if len(matches) > 1
+            " add the user defined submatch
+            result[name] = matches[1]
+        endif
+    endfor
+    return result
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
