@@ -25,6 +25,11 @@
             "partition": {
                 "values": "(0,11,1) -> v:val"
             }
+        },
+        "parser": {
+            "src": "s: (\w+) ",
+            "region": "r: (\w+) ",
+            "partition": "p: (\w+) "
         }
     },
     "StockReader": {

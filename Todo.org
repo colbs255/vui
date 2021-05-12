@@ -1,16 +1,14 @@
 #+TITLE: Todo
 
 * [ ] Core Features
-- [ ] Allow values to be generated from expression
-  + [ ] core part
+- [ ] Set no swap on vui buffers
+- [-] Allow values to be generated from expression
+  + [X] core part
   + [ ] allow user to enter to shorthand ranges (no step, 0->n)
 - [-] Better autocomplete experience
   + [ ] filter while typing
   + [ ] keep searching on backspace (look at COC)
   + [X] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
-- [X] fix regex search on matches
-  + [X] use `==#` (matchcase) instead of `==`
-  + [X] the period disables it, try iskeyword?..
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
 - [ ] press question mark for help (keymappings)
@@ -20,6 +18,9 @@
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
   - [ ] some sort of ascii cast or pictures
+- [X] fix regex search on matches
+  + [X] use `==#` (matchcase) instead of `==`
+  + [X] the period disables it, try iskeyword?..
 - [X] Make the autocomplete more convenient (tab)
   - [X] press enter to clear line and go into insert mode
     - [X] have blank line so they can type then tab through
