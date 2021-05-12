@@ -1,21 +1,26 @@
 #+TITLE: Todo
 
 * [ ] Core Features
+- [ ] Set no swap on vui buffers
+- [-] Allow values to be generated from expression
+  + [X] core part
+  + [ ] allow user to enter to shorthand ranges (no step, 0->n)
 - [-] Better autocomplete experience
   + [ ] filter while typing
   + [ ] keep searching on backspace (look at COC)
   + [X] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
-- [-] fix regex search on matches
-  + [X] use `==#` (matchcase) instead of `==`
-  + [ ] the period disables it, try iskeyword?..
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
 - [ ] press question mark for help (keymappings)
   + [ ] look into vim menu thing
+- [ ] Error messages instead of echos
 - [-] Documentation
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
   - [ ] some sort of ascii cast or pictures
+- [X] fix regex search on matches
+  + [X] use `==#` (matchcase) instead of `==`
+  + [X] the period disables it, try iskeyword?..
 - [X] Make the autocomplete more convenient (tab)
   - [X] press enter to clear line and go into insert mode
     - [X] have blank line so they can type then tab through
@@ -92,7 +97,6 @@
 * Extra Features
 - [ ] allow user to add arguments on the fly (not already in config)
 - [ ] Allow values to be read from separate file
-- [ ] Allow values to be generated from expression
 - [ ] press question mark for help
 - [ ] define sections for movement
 - [ ] output the type as part of the argument (just a 2 character code)
@@ -114,6 +118,7 @@
   + [ ] increment/decrement
 - [ ] Make autocomplete faster, use the async thing you saw in help
 - [ ] substring matching (instead of first word)
+- [ ] setting to unmap the tab and enter mappings?
 * Robustness
 - [X] function for mappings if they already exist
 - [ ] use same regex for higlgithing and searching

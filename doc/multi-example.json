@@ -2,7 +2,7 @@
     "JavaCLI": {
         "description": "Get data from website in specific region of world",
         "command": "java -jar ~/SampleCLI.jar",
-        "args-order": ["src", "region", "startTime", "binary"],
+        "args-order": ["src", "region", "startTime", "binary", "partition"],
         "args": {
             "src": {
                 "type": "string",
@@ -16,12 +16,20 @@
             },
             "startTime": {
                 "type": "string",
-                "values": ["2020-04-01"]
+                "values": "(0,5,1) -> strftime(\"%Y-%m-%d\", localtime() - v:val*24*60*60)"
             },
             "binary": {
                 "type": "boolean",
                 "default": "_enabled_"
+            },
+            "partition": {
+                "values": "(0,11,1) -> v:val"
             }
+        },
+        "parser": {
+            "src": "s: (\w+) ",
+            "region": "r: (\w+) ",
+            "partition": "p: (\w+) "
         }
     },
     "StockReader": {

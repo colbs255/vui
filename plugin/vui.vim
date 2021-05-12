@@ -75,6 +75,42 @@ function VUIIsArgLine()
     return !empty(s:GetArgProperyFromLine())
 endfunction
 
+function s:EvalArgValueGenerator(expression)
+    " Example: '(0,5,1) -> strftime("%Y-%m-%d", localtime() - v:val*24*60*60)'
+    let range_and_expression_regex = '\v\s*\((.*)\)\s+-\>\s+(.*)\s*'
+    let inner_number_regex = '\s*(-?\d+)\s*'
+    let range_splitter_regex = '\v'
+                \ . inner_number_regex . ',' . inner_number_regex . ',' . inner_number_regex
+
+    let main_match = matchlist(a:expression, range_and_expression_regex)
+    if len(main_match) < 3
+        echoerr "Invalid generator expression '" . a:expression . "'. Should be in format: '(start, end, step) -> expression'"
+        return []
+    endif
+
+    let [range_secion, user_expression] = main_match[1:2]
+    let range_split = matchlist(range_secion, range_splitter_regex)
+    if len(range_split) < 4
+        echoerr 'Must specify range in format (start, end, step)'
+        return []
+    endif
+    let range = {'start': range_split[1], 'end': range_split[2], 'step': range_split[3]}
+
+    return s:EvalLoop(range, user_expression, 'v:val')
+endfunction
+
+function s:EvalLoop(range, expression, placeholder)
+    let parameterized_expr = substitute(a:expression, '\C' . a:placeholder, '_vui_eval_index', 'g')
+    let _vui_eval_index = a:range['start']
+    let result = []
+    while (a:range['step'] > 0 && _vui_eval_index < a:range['end'])
+                \ || (a:range['step'] < 0 && _vui_eval_index > a:range['end'])
+        call add(result, eval(parameterized_expr))
+        let _vui_eval_index += a:range['step']
+    endwhile
+    return result
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
@@ -137,6 +173,10 @@ func s:AutoCompleteHandler()
         call add(result, s:enabled_keyword)
     else
         let config_values = get(arg_node, 'values', [])
+        if type(config_values) == v:t_string
+            " user entered an expression instead of list
+            let config_values = s:EvalArgValueGenerator(config_values)
+        endif
         let base_str = strpart(line, start, col('.') - start)
 
         for elem in config_values
