@@ -113,14 +113,25 @@ endfunction
 
 function s:ParseArgsFromString(str, parse_config)
     let result = {}
-    for [name, regex] in items(parse_config)
-        let matches = matchlist(str, '\v' . regex)
+    for [name, regex] in items(a:parse_config)
+        echom name
+        echom regex
+        let matches = matchlist(a:str, '\v' . regex)
+        echom matches
         if len(matches) > 1
             " add the user defined submatch
-            result[name] = matches[1]
+            let result[name] = matches[1]
         endif
     endfor
     return result
+endfunction
+
+function VUIPopulateArgsUsingString()
+    let test_config = {
+                \ 'src': 's: (\w+) ',
+                \ 'region': 'r: (\w+) ',
+                \ 'partition': 'p: (\d+) '}
+    echom s:ParseArgsFromString('s: www r: asdf p: 1 ', b:current_vui_config['parser'])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""

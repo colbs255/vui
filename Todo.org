@@ -2,6 +2,7 @@
 
 * [ ] Core Features
 - [ ] Set no swap on vui buffers
+- [ ] repeats of same arg but different values
 - [-] Allow values to be generated from expression
   + [X] core part
   + [ ] allow user to enter to shorthand ranges (no step, 0->n)
