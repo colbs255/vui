@@ -1,5 +1,6 @@
 setlocal buftype=nofile
 setlocal bufhidden=hide
+setlocal noswapfile
 
 command -buffer VUIOutputCommand call VUIOutputCommand()
 command -buffer VUIExecuteCommand call VUIExecuteCommand()
