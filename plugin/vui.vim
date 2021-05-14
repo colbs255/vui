@@ -242,6 +242,8 @@ function s:UpdateArgs(args_dict)
         call cursor(1,1)
         if search(s:FormatArgNameForBuffer(name))
             call setline(line('.'), s:FormatArgNameForBuffer(name) . ' ' . value)
+        elseif
+            echoerr 'Could not find ' . name . ' check config'
         endif
     endfor
 endfunction
@@ -328,7 +330,6 @@ function VUISaveResults()
 endfunction
 
 function VUIPopulateArgsUsingString(str)
-    echom a:str
     let parsed_args = s:ParseArgsFromString(a:str, b:current_vui_config['parser'])
     call s:UpdateArgs(parsed_args)
 endfunction
