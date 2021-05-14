@@ -114,24 +114,13 @@ endfunction
 function s:ParseArgsFromString(str, parse_config)
     let result = {}
     for [name, regex] in items(a:parse_config)
-        echom name
-        echom regex
         let matches = matchlist(a:str, '\v' . regex)
-        echom matches
         if len(matches) > 1
             " add the user defined submatch
             let result[name] = matches[1]
         endif
     endfor
     return result
-endfunction
-
-function VUIPopulateArgsUsingString()
-    let test_config = {
-                \ 'src': 's: (\w+) ',
-                \ 'region': 'r: (\w+) ',
-                \ 'partition': 'p: (\d+) '}
-    echom s:ParseArgsFromString('s: www r: asdf p: 1 ', b:current_vui_config['parser'])
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
@@ -248,6 +237,15 @@ function s:ToggleArgForLine()
     call setline(line('.'), s:FormatArgNameForBuffer(pair[0]) . ' ' . new_value)
 endfunction
 
+function s:UpdateArgs(args_dict)
+    for [name, value] in items(a:args_dict)
+        call cursor(1,1)
+        if search(s:FormatArgNameForBuffer(name))
+            call setline(line('.'), s:FormatArgNameForBuffer(name) . ' ' . value)
+        endif
+    endfor
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Parse Buffer
 """""""""""""""""""""""""""""""""""""""""""
@@ -295,8 +293,6 @@ function s:ParseVUIBufferArgs(vui_config)
     let args_dict = {}
     " use search to go through buffer for matches
     call cursor(1,1)
-    " (word at beginning of line) followed by colon followed by 1 or more whitespace
-    " (followed by any characters) excluding trailing whitespace
     while search(s:arg_and_value_pattern, 'W')
         let arg_pair = s:GetArgProperyFromLine()
         let args_dict[arg_pair[0]] = arg_pair[1]
@@ -329,6 +325,12 @@ endfunction
 function VUISaveResults()
     let file_name = input('Enter file name: ', '', 'file')
     call s:SaveResultsToFile(file_name)
+endfunction
+
+function VUIPopulateArgsUsingString(str)
+    echom a:str
+    let parsed_args = s:ParseArgsFromString(a:str, b:current_vui_config['parser'])
+    call s:UpdateArgs(parsed_args)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""

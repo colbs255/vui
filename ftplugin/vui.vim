@@ -5,6 +5,7 @@ command -buffer VUIOutputCommand call VUIOutputCommand()
 command -buffer VUIExecuteCommand call VUIExecuteCommand()
 command -buffer VUIExecuteCommandAndReadOuput call VUIExecuteCommandAndReadOuput()
 command -buffer VUISaveResults call VUISaveResults()
+command -buffer -nargs=1 VUIReadFromString call VUIPopulateArgsUsingString(<f-args>)
 
 function s:MapDefault(keys, value, maptype)
     if !hasmapto(a:value)
