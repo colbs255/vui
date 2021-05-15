@@ -27,7 +27,7 @@
             }
         },
         "parser": {
-            "src": "s: (\\S+) ",
+            "src": "%(s|source): (\\S+) ",
             "region": "r: (\\w+) ",
             "partition": "p: (\\d+) "
         }
