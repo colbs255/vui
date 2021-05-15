@@ -103,12 +103,15 @@ You can press `Ctrl-X Ctrl-F` while in insert mode for file completion
 - `:VUIExecuteCommandAndReadOuput`
     - Same as `VUIExecuteCommand` but read the output into the vui buffer instead
 - `:VUISaveResults`
-    - Save the results in the current vui buffer into a user-specified file
+    - Save the results of the current vui buffer into a user-specified file
+- `:VUIParseArgsFromFormattedString <formatted-string-arg>`
+    - Parse the passed in string for arg values and populate the vui buffer with them
+    - Useful for copying ouput from another program and populating the args
 
 # Mappings
-Each mapping can be overridden with the corresponding `<Plug>` mapping. For example, `nmap <CR> <Plug>(vui-execute-command)` would run `VUIExecuteCommand` when enter is pressed.
+Each mapping can be overridden with the corresponding `<Plug>` mapping. For example, `nmap <localleader><CR> <Plug>(vui-execute-command)` would run `VUIExecuteCommand` when localleader followed by enter is pressed.
 ## Normal Mode
-- `<localleader>enter`
+- `enter`
     - Delete the arg value in the current line, go into insert mode and activate autocomplete - useful for quick changes
     - `<Plug>(vui-change-arg-for-line)`
 - `<localleader>c`
