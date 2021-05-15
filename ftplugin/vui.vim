@@ -1,10 +1,12 @@
 setlocal buftype=nofile
 setlocal bufhidden=hide
+setlocal noswapfile
 
 command -buffer VUIOutputCommand call VUIOutputCommand()
 command -buffer VUIExecuteCommand call VUIExecuteCommand()
 command -buffer VUIExecuteCommandAndReadOuput call VUIExecuteCommandAndReadOuput()
 command -buffer VUISaveResults call VUISaveResults()
+command -buffer -nargs=1 VUIParseArgsFromFormattedString call VUIParseArgsFromFormattedString(<f-args>)
 
 function s:MapDefault(keys, value, maptype)
     if !hasmapto(a:value)

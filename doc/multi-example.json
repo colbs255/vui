@@ -27,9 +27,9 @@
             }
         },
         "parser": {
-            "src": "s: (\w+) ",
-            "region": "r: (\w+) ",
-            "partition": "p: (\w+) "
+            "src": "%(s|source): (\\S+) ",
+            "region": "r: (\\w+) ",
+            "partition": "p: (\\d+) "
         }
     },
     "StockReader": {
