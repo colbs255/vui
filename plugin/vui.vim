@@ -111,7 +111,7 @@ function s:EvalLoop(range, expression, placeholder)
     return result
 endfunction
 
-function s:ParseArgsFromString(str, parse_config)
+function s:ParseArgsFromFormattedString(str, parse_config)
     let result = {}
     for [name, regex] in items(a:parse_config)
         let matches = matchlist(a:str, '\v' . regex)
@@ -151,7 +151,7 @@ function s:PrintVUIBufferArgs(vui_config)
     let arg_names = get(a:vui_config, 'args-order', keys(a:vui_config['args']))
     for arg in arg_names
         if !has_key(a:vui_config['args'], arg)
-            echom "No config defined for " . arg
+            echoerr 'No config defined for ' . arg
             continue
         endif
         let arg_node = a:vui_config['args'][arg]
@@ -267,7 +267,7 @@ function s:GenerateCommand(vui_config)
         endif
 
         if !has_key(config_args, arg)
-            echom "No config defined for " . arg
+            echoerr 'No config defined for ' . arg
             continue
         endif
 
@@ -284,7 +284,7 @@ function s:GenerateCommand(vui_config)
                 call add(components, prefix . arg . ' ' . v)
             endif
         else
-            echom 'Invalid type for ' . arg . ' defaulting to string'
+            echoerr 'Invalid type in config for ' . arg . ' defaulting to string'
             call add(components, prefix . arg . ' ' . v)
         endif
     endfor
@@ -329,8 +329,8 @@ function VUISaveResults()
     call s:SaveResultsToFile(file_name)
 endfunction
 
-function VUIPopulateArgsUsingString(str)
-    let parsed_args = s:ParseArgsFromString(a:str, b:current_vui_config['parser'])
+function VUIParseArgsFromFormattedString(str)
+    let parsed_args = s:ParseArgsFromFormattedString(a:str, b:current_vui_config['parser'])
     call s:UpdateArgs(parsed_args)
 endfunction
 

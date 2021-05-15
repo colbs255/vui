@@ -1,7 +1,6 @@
 #+TITLE: Todo
 
 * [ ] Core Features
-- [X] Set no swap on vui buffers
 - [ ] repeats of same arg but different values
 - [X] parse args from passed in string
 - [-] Allow values to be generated from expression
@@ -15,7 +14,7 @@
   - [ ] might need a reverse args if the flag should appear first
 - [ ] press question mark for help (keymappings)
   + [ ] look into vim menu thing
-- [ ] Error messages instead of echos
+- [X] Error messages instead of echos
 - [-] Documentation
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
