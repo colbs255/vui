@@ -330,6 +330,10 @@ function VUISaveResults()
 endfunction
 
 function VUIParseArgsFromFormattedString(str)
+    if !has_key(b:current_vui_config, 'parser')
+        echoerr 'No parser config defined'
+        return
+    endif
     let parsed_args = s:ParseArgsFromFormattedString(a:str, b:current_vui_config['parser'])
     call s:UpdateArgs(parsed_args)
 endfunction
