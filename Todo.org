@@ -12,8 +12,7 @@
   + [X] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
-- [ ] press question mark for help (keymappings)
-  + [ ] look into vim menu thing
+- [X] press question mark for help (keymappings)
 - [X] Error messages instead of echos
 - [-] Documentation
   - [X] doc mappings

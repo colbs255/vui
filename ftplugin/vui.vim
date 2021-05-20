@@ -25,6 +25,7 @@ call s:MapDefaultWithLocalLeader('s', '<Plug>(vui-save-results)')
 call s:MapDefaultWithLocalLeader('c', '<Plug>(vui-clear-arg-for-line)')
 call s:MapDefaultWithLocalLeader('t', '<Plug>(vui-toggle-arg)')
 call s:MapDefault('<CR>', '<Plug>(vui-change-arg-for-line)', 'n')
+nnoremap <localleader>? :h vui-maps<CR>
 
 " Enter to select from completion else normal enter
 inoremap <buffer><expr><silent> <CR> pumvisible() ? "\<C-y>\<ESC>"
