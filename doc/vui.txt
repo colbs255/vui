@@ -3,13 +3,13 @@
 Commands                                                         *vui-commands*
 ===============================================================================
 
-" Global Commands
+Global Commands ~
                                                                          *:VUI*
 VUI <tool_name>                                                    
                     Opens a vui buffer for the specified tool
                     Tab completion for tools specified in config
 
-" VUI Buffer Commands
+VUI Buffer Commands ~
                                                             *:VUIOutputCommand*
 OutputCommand       Outputs the command generated from the current vui buffer
 
