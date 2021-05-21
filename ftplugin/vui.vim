@@ -24,6 +24,7 @@ call s:MapDefaultWithLocalLeader('r', '<Plug>(vui-execute-command-and-read)')
 call s:MapDefaultWithLocalLeader('s', '<Plug>(vui-save-results)')
 call s:MapDefaultWithLocalLeader('c', '<Plug>(vui-clear-arg-for-line)')
 call s:MapDefaultWithLocalLeader('t', '<Plug>(vui-toggle-arg)')
+call s:MapDefaultWithLocalLeader('h', '<Plug>(vui-help)')
 call s:MapDefault('<CR>', '<Plug>(vui-change-arg-for-line)', 'n')
 
 " Enter to select from completion else normal enter
