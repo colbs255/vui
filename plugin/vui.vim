@@ -137,7 +137,7 @@ function s:PrintVUIBufferHeader(vui_name, vui_config)
     let config_name = a:vui_name != "" ? a:vui_name : "No name defined"
     let title = '=' . config_name . '='
     let description = 'Description: ' . get(a:vui_config, 'description', 'No description defined')
-    let help_line = "Help: '<localleader>?' for list of commands"
+    let help_line = "Help: '<localleader>h' for list of commands"
     let header_lines = [description, help_line, '']
     call append(line('^'), title)
     call s:AppendLast(header_lines)
