@@ -353,6 +353,7 @@ noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
 
 noremap <Plug>(vui-change-arg-for-line) :call <SID>ClearArgValueForLine()<CR><C-R>=<SID>AutoCompleteHandler()<CR><C-p>
 inoremap <Plug>(vui-complete) <C-R>=<SID>AutoCompleteHandler()<CR>
+noremap <Plug>(vui-help) :h vui-maps<CR>
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Entry Point
