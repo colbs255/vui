@@ -1,6 +1,31 @@
 *vui.txt* A wrapper interface that makes command line tools more convenient
 
-Commands                                                         *vui-commands*
+TABLE OF CONTENTS                                                         *vui*
+===============================================================================
+
+|vui-introduction|
+|vui-configuration|
+|vui-commands|
+|vui-maps|
+
+
+INTRODUCTION                                                 *vui-introduction*
+===============================================================================
+
+vui (vim user interface) is a vim plugin that serves as a lightweight frontend
+to your command line tools by allowing you to quickly edit arguments and
+execute the commands directly from vim.
+
+Some command line tools have many arguments and are a hastle to remember
+and edit. vui allows you to quickly select the command line tool you want,
+edit the arguments in a vim buffer using vim completion, and then run the
+command directly from vim. vui can also print the results directly into the
+vim buffer and save them to a file.
+
+CONFIGURATION                                               *vui-configuration*
+===============================================================================
+
+COMMANDS                                                         *vui-commands*
 ===============================================================================
 
 Global Commands ~
@@ -32,7 +57,7 @@ ParseArgsFromFormattedString <formatted-string-arg>
                     Useful for copying ouput from another program
                     and populating the args
 
-Maps                                                                 *vui-maps*
+MAPS                                                                 *vui-maps*
 ===============================================================================
 
 Each mapping can be overridden with the corresponding `<Plug>` mapping.
