@@ -14,8 +14,8 @@ let g:loaded_vui = 1
 let g:vui_config_file = get(g:, 'vui_config_file', '~/.vim/vui.json')
 let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
-let s:arg_only_pattern = "^:\\(\\w\\+\\):"
-let s:arg_and_value_pattern = s:arg_only_pattern . "\\s\\+\\(.*\\)\\s*$"
+let s:arg_only_pattern = '\v^:(\w+):'
+let s:arg_and_value_pattern = s:arg_only_pattern . '\s+(.*)\s*$'
 let s:results_title = '=Results='
 
 """""""""""""""""""""""""""""""""""""""""""
