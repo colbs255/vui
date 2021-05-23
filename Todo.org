@@ -1,8 +1,7 @@
 #+TITLE: Todo
 
-* [ ] Core Features
+* Now
 - [ ] repeats of same arg but different values
-- [X] parse args from passed in string
 - [-] Allow values to be generated from expression
   + [X] core part
   + [ ] allow user to enter to shorthand ranges (no step, 0->n)
@@ -19,6 +18,38 @@
   - [X] add the vim version requirements (json dependency)
   - [ ] brief example of the plugin
   - [ ] some sort of ascii cast or pictures
+* Backlog
+- [ ] allow user to add arguments on the fly (not already in config)
+- [ ] Allow values to be read from separate file
+- [ ] output the type as part of the argument (just a 2 character code)
+- [ ] use autoload
+- [ ] custom formatting for final arg output
+- [ ] have the actual command in the buffer as well so user can edit it if needed
+- [ ] have config separated into different files in the same directory
+- [ ] conceal for syntax
+- [ ] cust formatting for executing output
+- [ ] multipart field?
+  + [ ] this can be used for a date (month, day, year)
+  + [ ] need a joiner string
+- [ ] use dispatch
+- [ ] ssh command support
+- [ ] time field
+  + [ ] this could be a multifield
+  + [ ] increment/decrement
+- [ ] Make autocomplete faster, use the async thing you saw in help
+- [ ] substring matching (instead of first word)
+- [ ] setting to unmap the tab and enter mappings?
+* Robustness
+- [X] function for mappings if they already exist
+- [ ] use same regex for higlgithing and searching
+- [ ] use shellescape() vim function when executing command
+- [ ] only read args inside an arg section
+- [ ] Put all of the state in the buffer itself rather than saving in memory (not sure about this one)
+  - [ ] have the type in the field
+  - [ ] somehow have the values
+  - [ ] have the command listed as well
+* [ ] Done
+- [X] parse args from passed in string
 - [X] fix regex search on matches
   + [X] use `==#` (matchcase) instead of `==`
   + [X] the period disables it, try iskeyword?..
@@ -95,33 +126,4 @@
 - [X] check version
 - [X] make it save results instead of write results (w -> s)
 - [X] allow user to make their own tab mappings
-* Extra Features
-- [ ] allow user to add arguments on the fly (not already in config)
-- [ ] Allow values to be read from separate file
-- [ ] output the type as part of the argument (just a 2 character code)
-- [ ] use autoload
-- [ ] custom formatting for final arg output
-- [ ] have the actual command in the buffer as well so user can edit it if needed
-- [ ] have config separated into different files in the same directory
-- [ ] conceal for syntax
-- [ ] cust formatting for executing output
-- [ ] multipart field?
-  + [ ] this can be used for a date (month, day, year)
-  + [ ] need a joiner string
-- [ ] use dispatch
-- [ ] ssh command support
-- [ ] time field
-  + [ ] this could be a multifield
-  + [ ] increment/decrement
-- [ ] Make autocomplete faster, use the async thing you saw in help
-- [ ] substring matching (instead of first word)
-- [ ] setting to unmap the tab and enter mappings?
-* Robustness
-- [X] function for mappings if they already exist
-- [ ] use same regex for higlgithing and searching
-- [ ] use shellescape() vim function when executing command
-- [ ] only read args inside an arg section
-- [ ] Put all of the state in the buffer itself rather than saving in memory (not sure about this one)
-  - [ ] have the type in the field
-  - [ ] somehow have the values
-  - [ ] have the command listed as well
+- [X] Use \v for all regexs
