@@ -17,6 +17,7 @@
 - [-] Documentation
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
+  - [ ] brief example of the plugin
   - [ ] some sort of ascii cast or pictures
 - [X] fix regex search on matches
   + [X] use `==#` (matchcase) instead of `==`

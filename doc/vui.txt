@@ -29,29 +29,28 @@ COMMANDS                                                         *vui-commands*
 ===============================================================================
 
 Global Commands ~
-                                                                         *:VUI*
-VUI <tool_name>                                                    
+
+VUI <tool>                                                               *:VUI*
                     Opens a vui buffer for the specified tool
                     Tab completion for tools specified in config
 
 VUI Buffer Commands ~
-                                                            *:VUIOutputCommand*
-OutputCommand       Outputs the command generated from the current vui buffer
 
-                                                           *:VUIExecuteCommand*
-ExecuteCommand      Generate the command from the buffer and execute it in vim
+VUIOutputCommand                                            *:VUIOutputCommand*
+                    Outputs the command generated from the current vui buffer
 
-                                               *:VUIExecuteCommandAndReadOuput*
-ExecuteCommandAndReadOuput
+VUIExecuteCommand                                          *:VUIExecuteCommand*
+                    Generate the command from the buffer and execute it in vim
+
+VUIExecuteCommandAndReadOuput                  *:VUIExecuteCommandAndReadOuput*
                     Same as |:VUIExecuteCommand| but read the output
                     into the vui buffer instead
 
-                                                              *:VUISaveResults*
-SaveResults         Save the results of the current vui buffer into a
+VUISaveResults                                                *:VUISaveResults*
+                    Save the results of the current vui buffer into a
                     user-specified file
 
-                                             *:VUIParseArgsFromFormattedString*
-ParseArgsFromFormattedString <formatted-string-arg>
+VUIParseArgsFromFormattedString <str>        *:VUIParseArgsFromFormattedString*
                     Parse the passed in string for arg values
                     and populate the vui buffer with them
                     Useful for copying ouput from another program
@@ -64,39 +63,39 @@ Each mapping can be overridden with the corresponding `<Plug>` mapping.
 For example, `nmap <localleader><CR> <Plug>(vui-execute-command)`
 would run `VUIExecuteCommand` when localleader followed by enter is pressed.
 
-                                                           *vui_<localleader>h*
-<localleader>h      Open vui mappings help
+<localleader>h                                             *vui_<localleader>h*
+                    Open vui mappings help
                     Note: You can close this window with `ctrl-w c`
                     Remap with `<Plug>(vui-help)`
 
-                                                                    *vui_enter*
-enter               Delete the arg value in the current line
+enter                                                               *vui_enter*
+                    Delete the arg value in the current line
                     then go into insert mode and activate autocomplete
                     Useful for quick changes
                     Remap with `<Plug>(vui-change-arg-for-line)`
 
-                                                           *vui_<localleader>c*
-<localleader>c      Same as `<Plug>(vui-change-arg-for-line)`
+<localleader>c                                             *vui_<localleader>c*
+                    Same as `<Plug>(vui-change-arg-for-line)`
                     but doesn't activate autocomplete
                     Remap with `<Plug>(vui-clear-arg-for-line)`
 
-                                                           *vui_<localleader>t*
-<localleader>t      Toggle the arg value in the current line
+<localleader>t                                             *vui_<localleader>t*
+                    Toggle the arg value in the current line
                     Enabled will switch to disabled and vice versa
                     Remap with `<Plug>(vui-toggle-arg)`
 
-                                                           *vui_<localleader>o*
-<localleader>o      Same as |:VUIOutputCommand|
+<localleader>o                                             *vui_<localleader>o*
+                    Same as |:VUIOutputCommand|
                     Remap with `<Plug>(vui-output-command)`
 
-                                                           *vui_<localleader>e*
-<localleader>e      Same as |:VUIExecuteCommand|
+<localleader>e                                             *vui_<localleader>e*
+                    Same as |:VUIExecuteCommand|
                     Remap with `<Plug>(vui-execute-command)`
 
-                                                           *vui_<localleader>r*
-<localleader>r      Same as |:VUIExecuteCommandAndReadOuput|
+<localleader>r                                             *vui_<localleader>r*
+                    Same as |:VUIExecuteCommandAndReadOuput|
                     Remap with `<Plug>(vui-execute-command-and-read)`
 
-                                                           *vui_<localleader>s*
-<localleader>s      Same as |:VUISaveResults|
+<localleader>s                                             *vui_<localleader>s*
+                    Same as |:VUISaveResults|
                     Remap with `<Plug>(vui-save-results)`
