@@ -108,9 +108,7 @@
 - [ ] multipart field?
   + [ ] this can be used for a date (month, day, year)
   + [ ] need a joiner string
-- [ ] allow for a function or shell script to generate the values for you
 - [ ] use dispatch
-- [ ] completion with case ignore
 - [ ] ssh command support
 - [ ] time field
   + [ ] this could be a multifield
