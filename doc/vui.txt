@@ -63,6 +63,8 @@ Each mapping can be overridden with the corresponding `<Plug>` mapping.
 For example, `nmap <localleader><CR> <Plug>(vui-execute-command)`
 would run `VUIExecuteCommand` when localleader followed by enter is pressed.
 
+Normal Mode ~
+
 <localleader>h                                             *vui_<localleader>h*
                     Open vui mappings help
                     Note: You can close this window with `ctrl-w c`
@@ -99,3 +101,11 @@ enter                                                               *vui_enter*
 <localleader>s                                             *vui_<localleader>s*
                     Same as |:VUISaveResults|
                     Remap with `<Plug>(vui-save-results)`
+
+Insert Mode ~
+
+Tab                                                                   *vui-tab*
+                    Activate autocomplete for the current line
+                    If cursor is not on an argument line then
+                    it will function as a normal tab
+                    Remap with `<Plug>(vui-complete)`
