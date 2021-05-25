@@ -258,50 +258,46 @@ function s:GetCommand()
 endfunction
 
 function s:GenerateCommand(vui_config)
-    let args_dict = s:ParseVUIBufferArgs(a:vui_config)
     let components = [a:vui_config['command']]
     let prefix = "--"
     let config_args = a:vui_config['args']
-    for arg in a:vui_config['args-order']
-        if !has_key(args_dict, arg)
-            " User may have removed arg in file
+    let args_list = s:ParseVUIBufferArgs(a:vui_config)
+
+    for [name, value] in args_list
+        if !has_key(config_args, name)
+            echoerr 'No config defined for ' . name
             continue
         endif
 
-        if !has_key(config_args, arg)
-            echoerr 'No config defined for ' . arg
-            continue
-        endif
-
-        let arg_node = config_args[arg]
-        let v = args_dict[arg]
+        let arg_node = config_args[name]
         let arg_type = get(arg_node, 'type', 'string')
 
         if arg_type ==? 'boolean'
-            if v ==# s:enabled_keyword
-                call add(components, prefix . arg)
+            if value ==# s:enabled_keyword
+                call add(components, prefix . name)
             endif
         elseif arg_type ==? 'string'
-            if v != s:disabled_keyword
-                call add(components, prefix . arg . ' ' . v)
+            if value != s:disabled_keyword
+                call add(components, prefix . name . ' ' . value)
             endif
         else
-            echoerr 'Invalid type in config for ' . arg . ' defaulting to string'
-            call add(components, prefix . arg . ' ' . v)
+            echoerr 'Invalid type in config for ' . name . ' defaulting to string'
+            call add(components, prefix . name . ' ' . value)
         endif
     endfor
+
     return join(components, " ")    
 endfunction
 
 function s:ParseVUIBufferArgs(vui_config)
-    let args_dict = {}
+    let args_list = []
     " use search to go through buffer for matches
     call cursor(1,1)
     while search(s:arg_and_value_pattern, 'W')
         let arg_pair = s:GetArgProperyFromLine()
-        let args_dict[arg_pair[0]] = arg_pair[1]
+        call add(args_list, [arg_pair[0], arg_pair[1]])
     endwhile
-    return args_dict
+    return args_list
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
