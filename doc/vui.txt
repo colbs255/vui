@@ -104,7 +104,7 @@ enter                                                               *vui_enter*
 
 Insert Mode ~
 
-Tab                                                                   *vui-tab*
+Tab                                                                   *vui_tab*
                     Activate autocomplete for the current line
                     If cursor is not on an argument line then
                     it will function as a normal tab
