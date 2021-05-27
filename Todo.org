@@ -1,18 +1,9 @@
 #+TITLE: Todo
 
 * Now
-- [ ] repeats of same arg but different values
-- [-] Allow values to be generated from expression
-  + [X] core part
-  + [ ] allow user to enter to shorthand ranges (no step, 0->n)
-- [-] Better autocomplete experience
-  + [ ] filter while typing
-  + [ ] keep searching on backspace (look at COC)
-  + [X] maybe a check if arg line function that checks if we are on arg line for tab and enter commands
+- [ ] update regex to support nonalphanumerics (non space should be fine)
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
-- [X] press question mark for help (keymappings)
-- [X] Error messages instead of echos
 - [-] Documentation
   - [X] doc mappings
   - [X] add the vim version requirements (json dependency)
@@ -21,7 +12,6 @@
 * Backlog
 - [ ] allow user to add arguments on the fly (not already in config)
 - [ ] Allow values to be read from separate file
-- [ ] output the type as part of the argument (just a 2 character code)
 - [ ] use autoload
 - [ ] custom formatting for final arg output
 - [ ] have the actual command in the buffer as well so user can edit it if needed
@@ -49,6 +39,12 @@
   - [ ] somehow have the values
   - [ ] have the command listed as well
 * [ ] Done
+- [X] press question mark for help (keymappings)
+- [X] Error messages instead of echos
+- [X] repeats of same arg but different values
+- [X] Allow values to be generated from expression
+  + [X] core part
+  + [X] allow user to enter to shorthand ranges (no step, 0->n)
 - [X] parse args from passed in string
 - [X] fix regex search on matches
   + [X] use `==#` (matchcase) instead of `==`
