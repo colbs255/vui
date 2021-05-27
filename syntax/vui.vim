@@ -1,8 +1,8 @@
 syntax keyword enabled_keyword _enabled_
 syntax keyword disabled_keyword _disabled_
 syntax match command_keyword /^\*Command\*/
-syntax match arg_name /^:\w\+:/
-syntax match title /^=\w\+=/
+syntax match arg_name /^:\S\+:/
+syntax match title /^=.\+=/
 
 hi def link title Keyword
 hi def link enabled_keyword Boolean

@@ -1,7 +1,6 @@
 #+TITLE: Todo
 
 * Now
-- [ ] update regex to support nonalphanumerics (non space should be fine)
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
 - [-] Documentation
@@ -31,6 +30,7 @@
 - [ ] setting to unmap the tab and enter mappings?
 * Robustness
 - [X] function for mappings if they already exist
+- [X] update regex to support nonalphanumerics (non space should be fine)
 - [ ] use same regex for higlgithing and searching
 - [ ] use shellescape() vim function when executing command
 - [ ] only read args inside an arg section
