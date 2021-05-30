@@ -26,43 +26,48 @@ If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
     "Tool1-Name": {
         "description": "Description for tool 1",
         "command": "java -jar ~/Tool1.jar",
-        "args-order": ["arg1", "arg2", "arg3"],
-        "args": {
-            "arg1": {
+        "args": [
+            {
+                "name": "arg1",
                 "type": "string",
                 "values": ["www.google.com", "www.bing.com", "www.yahoo.com"],
                 "default": "www.yahoo.com"
             },
-            "arg2": {
+            {
+                "name": "arg2",
                 "type": "string",
                 "values": ["2020-04-01"]
             },
-            "arg3": {
+            {
+                "name": "arg3",
                 "type": "boolean",
                 "default": "_enabled_"
             }
-        }
+        ]
     },
     "StockCLI": {
         "description": "Look up statistics for stocks",
         "command": "python  ~/StockCLI.py",
-        "args-order": ["exchange", "ticker", "date", "statistic"],
-        "args": {
-            "exchange": {
+        "args": [
+            {
+                "name": "exchange",
                 "values": ["NYSE", "NASDAQ", "JPX", "XLON"],
                 "default": "NYSE"
             },
-            "ticker": {
+            {
+                "name": "ticker",
                 "values": ["AAPL", "PLTR"],
                 "default": "AAPL"
             },
-            "date": {
+            {
+                "name": "date",
                 "values": ["2020-04-01"]
             },
-            "statistic": {
+            {
+                "name": "statistic",
                 "values": ["High", "Low", "Avg", "Volume"]
             }
-        }
+        ]
     }
 }
 ```
@@ -70,8 +75,7 @@ If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
 - Configure vui via a json file with each key being the name of the tool and the value containing information about the tool:
     - `description`: quick discription of tool that is displayed on vui page
     - `command`: the command to run
-    - `args-order`: list of args indicating the order in which they will be displayed in the vui buffer
-    - `args`: the display information for each arg of the tool
+    - `args`: information for each arg of the tool
 - There are 2 types of arguments: binary and string
     - String is just a basic argument with no special logic, if the type is not specified then the arg will be treated as a string
     - Binary args don't have a value paired with them - they are just on or off. `_enabled_` means it will appear in the final command

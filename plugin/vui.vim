@@ -50,13 +50,34 @@ function s:SaveResultsToFile(file_name)
     endif
 endfunction
 
+function s:GetConfigForTool(tool, file)
+    let raw_config = s:LoadVUIConfig(a:file)
+    let config_for_tool = get(raw_config, a:tool, {})
+    let config_for_tool['args-map'] = s:CreateArgsMap(config_for_tool)
+    return config_for_tool
+endfunction
+
 function s:LoadVUIConfig(file)
     let file_text = join(readfile(glob(a:file)))
     return json_decode(file_text)
 endfunction
 
+function s:CreateArgsMap(config)
+    let args_map = {}
+    let args_list = get(a:config, 'args', [])
+    for arg_entry in args_list
+        let arg_name = get(arg_entry, 'name', '')
+        if empty(arg_name)
+            echoerr 'Arg entry in config is missing a name attribute'
+        endif
+        let args_map[arg_name] = arg_entry
+    endfor
+
+    return args_map
+endfunction
+
 function s:GetInfoForArg(arg_name)
-    let args = get(b:current_vui_config, 'args', {})
+    let args = get(b:current_vui_config, 'args-map', {})
     return get(args, a:arg_name, {})
 endfunction
 
@@ -144,19 +165,19 @@ function s:PrintVUIBufferHeader(vui_name, vui_config)
 endfunction
 
 function s:PrintVUIBufferArgs(vui_config)
-    if !has_key(a:vui_config, 'args')
+    if !has_key(a:vui_config, 'args-map')
         call s:AppendLast('No args defined')
         return
     endif
 
     call s:AppendLast('=Args=')
-    let arg_names = get(a:vui_config, 'args-order', keys(a:vui_config['args']))
+    let arg_names = get(a:vui_config, 'args-order', keys(a:vui_config['args-map']))
     for arg in arg_names
-        if !has_key(a:vui_config['args'], arg)
+        if !has_key(a:vui_config['args-map'], arg)
             echoerr 'No config defined for ' . arg
             continue
         endif
-        let arg_node = a:vui_config['args'][arg]
+        let arg_node = a:vui_config['args-map'][arg]
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
         call s:AppendLast(s:FormatArgNameForBuffer(arg) . ' '  . arg_value)
     endfor
@@ -260,7 +281,7 @@ endfunction
 function s:GenerateCommand(vui_config)
     let components = [a:vui_config['command']]
     let prefix = "--"
-    let config_args = a:vui_config['args']
+    let config_args = a:vui_config['args-map']
     let args_list = s:ParseVUIBufferArgs(a:vui_config)
 
     for [name, value] in args_list
@@ -373,7 +394,7 @@ function s:OpenVUI(vui_name)
 endfunction
 
 function s:UpdateVUI(vui_name)
-    let b:current_vui_config = get(s:LoadVUIConfig(g:vui_config_file), a:vui_name, {})
+    let b:current_vui_config = s:GetConfigForTool(a:vui_name, g:vui_config_file)
     call s:PrintVUIBuffer(a:vui_name, b:current_vui_config)
 endfunction
 

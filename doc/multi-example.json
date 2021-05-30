@@ -2,30 +2,34 @@
     "JavaCLI": {
         "description": "Get data from website in specific region of world",
         "command": "java -jar ~/SampleCLI.jar",
-        "args-order": ["src", "region", "startTime", "binary", "partition"],
-        "args": {
-            "src": {
+        "args": [
+            {
+                "name": "src",
                 "type": "string",
                 "values": ["www.google.com", "www.apple.com"],
                 "default": "www.yahoo.com"
             },
-            "region": {
+            {
+                "name": "region",
                 "type": "string",
                 "values": ["US", "EU", "ASIA"],
                 "default": "US"
             },
-            "startTime": {
+            {
+                "name": "startTime",
                 "type": "string",
                 "values": "(0,5,1) -> strftime(\"%Y-%m-%d\", localtime() - v:val*24*60*60)"
             },
-            "binary": {
+            {
+                "name": "binary",
                 "type": "boolean",
                 "default": "_enabled_"
             },
-            "partition": {
+            {
+                "name": "partition",
                 "values": "(0,11,1) -> v:val"
             }
-        },
+        ],
         "parser": {
             "src": "%(s|source): (\\S+) ",
             "region": "r: (\\w+) ",
@@ -35,23 +39,26 @@
     "StockReader": {
         "description": "Ouput statistic for a stock",
         "command": "python  ~/stock_reader.py",
-        "args-order": ["exchange", "ticker", "date", "statistic"],
-        "args": {
-            "exchange": {
+        "args": [
+            {
+                "name": "exchange",
                 "values": ["NYSE", "NASDAQ", "JPX", "XLON"],
                 "default": "NYSE"
             },
-            "ticker": {
+            {
+                "name": "ticker",
                 "values": ["AAPL", "PLTR"],
                 "default": "AAPL"
             },
-            "date": {
+            {
+                "name": "date",
                 "values": ["2020-04-01"]
             },
-            "statistic": {
+            {
+                "name": "statistic",
                 "values": ["High", "Low", "Avg", "Volume"]
             }
-        }
+        ]
 
     }
 }
