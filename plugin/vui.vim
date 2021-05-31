@@ -184,7 +184,7 @@ function s:PrintVUIBufferArgs(vui_config)
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""
-" Section: Editing Buffer
+" Section: Edit Buffer
 """""""""""""""""""""""""""""""""""""""""""
 func s:AutoCompleteHandler()
     let line = getline('.')
