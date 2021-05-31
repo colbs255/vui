@@ -348,12 +348,13 @@ function VUISaveResults()
     call s:SaveResultsToFile(file_name)
 endfunction
 
-function VUIParseArgsFromFormattedString(str)
+function VUIParseArgsFromString()
     if !has_key(b:current_vui_config, 'parser')
         echoerr 'No parser config defined'
         return
     endif
-    let parsed_args = s:ParseArgsFromFormattedString(a:str, b:current_vui_config['parser'])
+    let str_to_parse = input('Enter string to parse args from: ')
+    let parsed_args = s:ParseArgsFromFormattedString(str_to_parse, b:current_vui_config['parser'])
     call s:UpdateArgs(parsed_args)
 endfunction
 
@@ -364,6 +365,7 @@ noremap <Plug>(vui-output-command) :call VUIOutputCommand()<CR>
 noremap <Plug>(vui-execute-command) :call VUIExecuteCommand()<CR>
 noremap <Plug>(vui-execute-command-and-read) :call VUIExecuteCommandAndReadOuput()<CR>
 noremap <Plug>(vui-save-results) :call VUISaveResults()<CR>
+noremap <Plug>(vui-parse-args) :call VUIParseArgsFromString()<CR>
 
 noremap <silent> <Plug>(vui-clear-arg-for-line) :call <SID>ClearArgValueForLine()<CR>
 noremap <silent> <Plug>(vui-toggle-arg) :call <SID>ToggleArgForLine()<CR>
