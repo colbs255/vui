@@ -50,7 +50,7 @@ VUISaveResults                                                *:VUISaveResults*
                     Save the results of the current vui buffer into a
                     user-specified file
 
-VUIParseArgsFromFormattedString <str>        *:VUIParseArgsFromFormattedString*
+VUIParseArgsFromString              *:VUIParseArgsFromString*
                     Parse the passed in string for arg values
                     and populate the vui buffer with them
                     Useful for copying ouput from another program
@@ -101,6 +101,10 @@ enter                                                               *vui_enter*
 <localleader>s                                             *vui_<localleader>s*
                     Same as |:VUISaveResults|
                     Remap with `<Plug>(vui-save-results)`
+
+<localleader>p                                             *vui_<localleader>p*
+                    Same as |:VUIParseArgsFromString|
+                    Remap with `<Plug>(vui-parse-args)`
 
 Insert Mode ~
 

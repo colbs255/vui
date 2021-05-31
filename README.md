@@ -108,7 +108,7 @@ You can press `Ctrl-X Ctrl-F` while in insert mode for file completion
     - Same as `VUIExecuteCommand` but read the output into the vui buffer instead
 - `:VUISaveResults`
     - Save the results of the current vui buffer into a user-specified file
-- `:VUIParseArgsFromFormattedString <formatted-string-arg>`
+- `:VUIParseArgsFromString`
     - Parse the passed in string for arg values and populate the vui buffer with them
     - Useful for copying ouput from another program and populating the args
 
@@ -136,6 +136,9 @@ Each mapping can be overridden with the corresponding `<Plug>` mapping. For exam
 - `<localleader>s`
     - Same as `:VUISaveResults`
     - `<Plug>(vui-save-results)`
+- `<localleader>p`
+    - Same as `:VUIParseArgsFromString`
+    - `<Plug>(vui-parse-args)`
 ## Insert Mode
 - `Tab`
     - Activate autocomplete for the current line
