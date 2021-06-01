@@ -171,15 +171,13 @@ function s:PrintVUIBufferArgs(vui_config)
     endif
 
     call s:AppendLast('=Args=')
-    let arg_names = get(a:vui_config, 'args-order', keys(a:vui_config['args-map']))
-    for arg in arg_names
-        if !has_key(a:vui_config['args-map'], arg)
-            echoerr 'No config defined for ' . arg
-            continue
+    for arg_node in a:vui_config['args']
+        if !has_key(arg_node, 'name')
+            echoerr 'No name defined in config for arg'
+            break
         endif
-        let arg_node = a:vui_config['args-map'][arg]
         let arg_value = get(arg_node, 'default', s:disabled_keyword)
-        call s:AppendLast(s:FormatArgNameForBuffer(arg) . ' '  . arg_value)
+        call s:AppendLast(s:FormatArgNameForBuffer(arg_node['name']) . ' '  . arg_value)
     endfor
 endfunction
 
