@@ -16,13 +16,14 @@ vui reads from a json file to figure out which command to run, what arguments to
 
 Set `g:vui_config_file` in your vim config to let vim know where to find your config. This line in your `.vimrc` would work for example:
 ``` vim-script
-g:vui_config_file = '~/vui_config.json'
+let g:vui_config_file = '~/vui_config.json'
 ```
 
 If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
 ## Example Configuration
 ``` json
 {
+    # Config for tool1
     "Tool1-Name": {
         "description": "Description for tool 1",
         "command": "java -jar ~/Tool1.jar",
@@ -30,59 +31,49 @@ If the config variable is not set then vui will attempt to use `~/.vim/vui.json`
             {
                 "name": "arg1",
                 "type": "string",
+                # Autocomplete values to help user
                 "values": ["www.google.com", "www.bing.com", "www.yahoo.com"],
                 "default": "www.yahoo.com"
             },
             {
                 "name": "arg2",
                 "type": "string",
-                "values": ["2020-04-01"]
+                # Similar to the python range function - used to generate values dynamically with vimscript
+                "values": "(0,5,1) -> v:val"
             },
             {
                 "name": "arg3",
                 "type": "boolean",
+                # Boolean type doesn't have a corresponding value, it just shows up in the command or doesn't
                 "default": "_enabled_"
             }
         ]
+        # Example command: java -jar ~/Tool1.jar --arg1 www.google.com --arg2 1 --arg3
     },
+    # Config for StockCLI tool
     "StockCLI": {
         "description": "Look up statistics for stocks",
         "command": "python  ~/StockCLI.py",
         "args": [
             {
-                "name": "exchange",
-                "values": ["NYSE", "NASDAQ", "JPX", "XLON"],
-                "default": "NYSE"
-            },
-            {
-                "name": "ticker",
+                "name": "symbol",
                 "values": ["AAPL", "PLTR"],
                 "default": "AAPL"
             },
             {
                 "name": "date",
-                "values": ["2020-04-01"]
+                # Use range to autocomplete the dates of the last few days
+                "values": "(0,5,1) -> strftime(\"%Y-%m-%d\", localtime() - v:val*24*60*60)"
             },
             {
-                "name": "statistic",
+                "name": "measure",
                 "values": ["High", "Low", "Avg", "Volume"]
             }
         ]
+        # Example command: python3 ~/StockCLI.py --symbol AAPL --date 2021-01-01 --statistic Avg
     }
 }
 ```
-## Configuration Format
-- Configure vui via a json file with each key being the name of the tool and the value containing information about the tool:
-    - `description`: quick discription of tool that is displayed on vui page
-    - `command`: the command to run
-    - `args`: information for each arg of the tool
-- There are 2 types of arguments: binary and string
-    - String is just a basic argument with no special logic, if the type is not specified then the arg will be treated as a string
-    - Binary args don't have a value paired with them - they are just on or off. `_enabled_` means it will appear in the final command
-        - `"type": "binary"` will make it a binary arg.
-- For each arg, specify the values used for completion via a list in `values` and a default value with `default`
-    - If no default is specified then `_disabled_` will be used
-
 # Completion
 vui reads from the config to suggest values for completion. It detects the argument in the current line and suggests only the values for that argument.
 - See the mappings section for how to activate argument completion
