@@ -39,6 +39,7 @@
   - [ ] somehow have the values
   - [ ] have the command listed as well
 * [ ] Done
+- [X] substring matching
 - [X] simplify config - list of args rather than dict AND list made by user
 - [X] press question mark for help (keymappings)
 - [X] Error messages instead of echos

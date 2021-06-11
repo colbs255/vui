@@ -144,6 +144,10 @@ function s:ParseArgsFromFormattedString(str, parse_config)
     return result
 endfunction
 
+function s:IsSubstring(candidate, pattern)
+    return stridx(a:candidate, a:pattern) != -1
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Create Buffer
 """""""""""""""""""""""""""""""""""""""""""
@@ -188,7 +192,7 @@ func s:AutoCompleteHandler()
     let line = getline('.')
     let start = col('.') - 1
     while start > 0 && line[start - 1] =~ '\S'
-      let start -= 1
+        let start -= 1
     endwhile
     let arg_pair = s:GetArgProperyFromLine()
     if empty(arg_pair)
@@ -213,7 +217,7 @@ func s:AutoCompleteHandler()
         let base_str = strpart(line, start, col('.') - start)
 
         for elem in config_values
-            if s:IsPrefix(elem, base_str)
+            if s:IsSubstring(elem, base_str)
                 call add(result, elem)
             endif
         endfor
