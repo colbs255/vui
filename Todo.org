@@ -1,17 +1,6 @@
 #+TITLE: Todo
 
 * Now
-- [-] substring matching
-  - [ ] think it would be good as a separate feature (resolve or match)
-  - [X] substring function
-  - [X] filter function
-  - [ ] Get text in current line and pass to filter function
-  - [ ] pass the args from teh config
-  - [ ]
-  - [ ] Get filter results and populate autocomplete
-  - [ ] What do i do with already entered text? Maybe just leave it and let user select it
-  - [ ] Create mapping for it
-    + [ ] could be enter again?
 - [ ] Support commands that have "main" arguments like grep
   - [ ] might need a reverse args if the flag should appear first
 - [-] Documentation
@@ -50,6 +39,7 @@
   - [ ] somehow have the values
   - [ ] have the command listed as well
 * [ ] Done
+- [X] substring matching
 - [X] simplify config - list of args rather than dict AND list made by user
 - [X] press question mark for help (keymappings)
 - [X] Error messages instead of echos
