@@ -329,7 +329,7 @@ endfunction
 function VUIExecuteCommand()
     let command = s:GetCommand()
     echom 'Executing command: ' . command
-    execute '!' . command
+    execute '! echo ' command . ';' . command
 endfunction
 
 function VUIExecuteCommandAndReadOuput()
