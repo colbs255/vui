@@ -223,10 +223,6 @@ func s:AutoCompleteHandler()
         endfor
     endif
 
-    if empty(result)
-        return ''
-    endif
-
     call add(result, s:disabled_keyword)
     call complete(start + 1, result)
     return ''
