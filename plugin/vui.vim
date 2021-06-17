@@ -17,6 +17,7 @@ let s:enabled_keyword = '_enabled_'
 let s:arg_only_pattern = '\v^:(\S+):'
 let s:arg_and_value_pattern = s:arg_only_pattern . '\s+(.*)\s*$'
 let s:results_title = '=Results='
+let s:args_title = '=Args='
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Utils
@@ -25,10 +26,10 @@ function s:AppendLast(text)
     call append(line('$'), a:text)
 endfunction
 
+" Return list with first elem being p-name and second being p-value
+" If match not successful then empty list returned
+" If value not found then only list with arg name returned
 function s:GetArgProperyFromLine()
-    " Return list with first elem being p-name and second being p-value
-    " If match not successful then empty list returned
-    " If value not found then only list with arg name returned
     let line = getline('.')
     let arg_only_match = matchlist(line, s:arg_only_pattern)
     if empty(arg_only_match)
@@ -44,8 +45,7 @@ function s:GetArgProperyFromLine()
 endfunction
 
 function s:SaveResultsToFile(file_name)
-    call cursor(1,1)
-    if search('^' . s:results_title, 'W')
+    if search('^' . s:results_title, 'w')
         execute '.,$write! ' . a:file_name
     endif
 endfunction
@@ -174,7 +174,7 @@ function s:PrintVUIBufferArgs(vui_config)
         return
     endif
 
-    call s:AppendLast('=Args=')
+    call s:AppendLast(s:args_title)
     for arg_node in a:vui_config['args']
         if !has_key(arg_node, 'name')
             echoerr 'No name defined in config for arg'
@@ -391,6 +391,10 @@ endfunction
 function s:OpenVUI(vui_name)
     execute 'silent edit __' . a:vui_name . '__.vui'
     call s:UpdateVUI(a:vui_name)
+    " Position the cursor 1 line below args title
+    " so user can quickly start editing the args
+    call search('^' . s:args_title, 'w')
+    call cursor(line('.') + 1, 1)
 endfunction
 
 function s:UpdateVUI(vui_name)
