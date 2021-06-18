@@ -16,9 +16,9 @@ let s:disabled_keyword = '_disabled_'
 let s:enabled_keyword = '_enabled_'
 let s:arg_only_pattern = '\v^:(\S+):'
 let s:arg_and_value_pattern = s:arg_only_pattern . '\s+(.*)\s*$'
+let s:range_and_expression_pattern = '\v\s*\((.*)\)\s+-\>\s+(.*)\s*'
 let s:results_title = '=Results='
 let s:args_title = '=Args='
-let s:range_and_expression_regex = '\v\s*\((.*)\)\s+-\>\s+(.*)\s*'
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Utils
@@ -114,7 +114,7 @@ function VUIIsArgLine()
 endfunction
 
 function s:IsRangeAndExpression(expression)
-    return len(matchlist(a:expression, s:range_and_expression_regex)) >= 3
+    return len(matchlist(a:expression, s:range_and_expression_pattern)) >= 3
 endfunction
 
 function s:EvalArgValueGenerator(expression)
@@ -123,7 +123,7 @@ function s:EvalArgValueGenerator(expression)
     let range_splitter_regex = '\v'
                 \ . inner_number_regex . ',' . inner_number_regex . ',' . inner_number_regex
 
-    let main_match = matchlist(a:expression, s:range_and_expression_regex)
+    let main_match = matchlist(a:expression, s:range_and_expression_pattern)
     if !s:IsRangeAndExpression(a:expression)
         echoerr "Invalid generator expression '" . a:expression . "'. Should be in format: '(start, end, step) -> expression'"
         return []
