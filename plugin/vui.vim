@@ -18,6 +18,7 @@ let s:arg_only_pattern = '\v^:(\S+):'
 let s:arg_and_value_pattern = s:arg_only_pattern . '\s+(.*)\s*$'
 let s:results_title = '=Results='
 let s:args_title = '=Args='
+let s:range_and_expression_regex = '\v\s*\((.*)\)\s+-\>\s+(.*)\s*'
 
 """""""""""""""""""""""""""""""""""""""""""
 " Section: Utils
@@ -54,11 +55,12 @@ function s:GetConfigForTool(tool, file)
     let raw_config = s:LoadVUIConfig(a:file)
     let config_for_tool = get(raw_config, a:tool, {})
     let config_for_tool['args-map'] = s:CreateArgsMap(config_for_tool)
+    call s:LoadArgCompletionsFromFilesIntoConfig(config_for_tool)
     return config_for_tool
 endfunction
 
 function s:LoadVUIConfig(file)
-    let file_text = join(readfile(glob(a:file)))
+    let file_text = join(s:GetLinesFromFile(a:file))
     return json_decode(file_text)
 endfunction
 
@@ -76,6 +78,21 @@ function s:CreateArgsMap(config)
     return args_map
 endfunction
 
+" Load arg completions from files specified in the config
+" Replaces the file name in config with list of args
+function s:LoadArgCompletionsFromFilesIntoConfig(config)
+    for arg_info in a:config['args']
+        let values = get(arg_info, 'values', [])
+        if type(values) == v:t_string && !s:IsRangeAndExpression(values)
+            let arg_info['values'] = s:GetLinesFromFile(values)
+        endif
+    endfor
+endfunction
+
+function s:GetLinesFromFile(file)
+    return readfile(glob(a:file))
+endfunction
+
 function s:GetInfoForArg(arg_name)
     let args = get(b:current_vui_config, 'args-map', {})
     return get(args, a:arg_name, {})
@@ -89,22 +106,25 @@ function s:IsPrefix(str, prefix)
     return stridx(a:str, a:prefix) == 0
 endfunction
 
+" Checks if current line is argument line
+" Useful for mappings, user can change key functionality based on what
+" line they are on
 function VUIIsArgLine()
-    " Checks if current line is argument line
-    " Useful for mappings, user can change key functionality based on what
-    " line they are on
     return !empty(s:GetArgProperyFromLine())
+endfunction
+
+function s:IsRangeAndExpression(expression)
+    return len(matchlist(a:expression, s:range_and_expression_regex)) >= 3
 endfunction
 
 function s:EvalArgValueGenerator(expression)
     " Example: '(0,5,1) -> strftime("%Y-%m-%d", localtime() - v:val*24*60*60)'
-    let range_and_expression_regex = '\v\s*\((.*)\)\s+-\>\s+(.*)\s*'
     let inner_number_regex = '\s*(-?\d+)\s*'
     let range_splitter_regex = '\v'
                 \ . inner_number_regex . ',' . inner_number_regex . ',' . inner_number_regex
 
-    let main_match = matchlist(a:expression, range_and_expression_regex)
-    if len(main_match) < 3
+    let main_match = matchlist(a:expression, s:range_and_expression_regex)
+    if !s:IsRangeAndExpression(a:expression)
         echoerr "Invalid generator expression '" . a:expression . "'. Should be in format: '(start, end, step) -> expression'"
         return []
     endif

@@ -6,7 +6,7 @@
             {
                 "name": "src",
                 "type": "string",
-                "values": ["www.google.com", "www.apple.com"],
+                "values": "~/.vim/local_plugins/vui/doc/sources.txt",
                 "default": "www.yahoo.com"
             },
             {
