@@ -123,12 +123,12 @@ function s:EvalArgValueGenerator(expression)
     let range_splitter_regex = '\v'
                 \ . inner_number_regex . ',' . inner_number_regex . ',' . inner_number_regex
 
-    let main_match = matchlist(a:expression, s:range_and_expression_pattern)
     if !s:IsRangeAndExpression(a:expression)
         echoerr "Invalid generator expression '" . a:expression . "'. Should be in format: '(start, end, step) -> expression'"
         return []
     endif
 
+    let main_match = matchlist(a:expression, s:range_and_expression_pattern)
     let [range_secion, user_expression] = main_match[1:2]
     let range_split = matchlist(range_secion, range_splitter_regex)
     if len(range_split) < 4
