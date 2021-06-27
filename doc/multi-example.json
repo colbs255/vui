@@ -2,6 +2,11 @@
     "JavaCLI": {
         "description": "Get data from website in specific region of world",
         "command": "java -jar ~/SampleCLI.jar",
+        "parser": {
+            "src": "%(s|source): (\\S+)",
+            "region": "r: (\\w+)",
+            "partition": "p: (\\d+)"
+        },
         "args": [
             {
                 "name": "src",
@@ -29,12 +34,7 @@
                 "name": "partition",
                 "values": "(0,11,1) -> v:val"
             }
-        ],
-        "parser": {
-            "src": "%(s|source): (\\S+) ",
-            "region": "r: (\\w+) ",
-            "partition": "p: (\\d+) "
-        }
+        ]
     },
     "StockReader": {
         "description": "Ouput statistic for a stock",

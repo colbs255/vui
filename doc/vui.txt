@@ -1,5 +1,11 @@
 *vui.txt* A wrapper interface that makes command line tools more convenient
 
+                                            _                                 ~
+                               __   ___   _(_)                                ~
+                               \ \ / / | | | |                                ~
+                                \ V /| |_| | |                                ~
+                                 \_/  \__,_|_|                                ~
+
 TABLE OF CONTENTS                                                         *vui*
 ===============================================================================
 
@@ -24,6 +30,93 @@ vim buffer and save them to a file.
 
 CONFIGURATION                                               *vui-configuration*
 ===============================================================================
+
+vui reads from a json file to figure out which command to run, what arguments
+to display, and what values can be completed.
+
+Set `g:vui_config_file` in your vim config to let vim know where to find your
+config. For example: >
+    let g:vui_config_file = '~/vui_config.json'
+<
+
+If the config variable is not set then vui will attempt to use
+`~/.vim/vui.json`
+
+Tool Configuration ~
+
+Each key of the json config file is the name of the tool and the value is
+an object containing information about the tool. Each tool has these fields:
+- `description`: quick discription of tool that is displayed on vui page
+- `command`: the actual command to run
+- `args`: list of objects describing the args for the tool (see next section)
+- `parser`: Map of arg-names to regular expressions that are used to extract
+    arg values from a passed in string. If a match is found, whatever is in
+    the first capture group will be used to populate the argument values.
+    See |:VUIParseArgsFromString|
+
+Tool Arguments Configuration ~
+
+There are 2 types of arguments: binary and string
+- String is just a basic argument with no special logic,
+if the type is not specified then the arg will be treated as a string
+- Binary args don't have a value paired with them - they are just on or off
+    - `_enabled_` means it will appear in the final command
+    - `_disabled_` means it won't appear in the final command
+    - `"type": "binary"` will make it a binary arg.
+For each arg, specify the values used for completion via a list in `values`
+and a default value with `default`
+- If no default is specified then `_disabled_` will be used
+- If the values entry is a string, then vui will assume the string is a file
+    and read the arguments from the file, treating each line as an arg value
+- Basic lambdas can also be specified to generate arguments with a syntax
+    similar to python list comprehensions. The syntax is
+    >
+    (rangeStart, rangeStep, step) -> exression
+    <
+    Where endValue startValue is inclusive and rangeStep is exclusive
+    Expression should contain v:val for the value generated from the range
+    See the example configuration below for an example
+
+Example Configuration ~
+
+>
+{
+# Config for StockCLI tool
+  "StockCLI": {
+    "description": "Look up statistics for stocks",
+    "command": "python  ~/StockCLI.py",
+    "parser": {
+      "symbol": "s: (\\w+)",
+      "date": "d: (\\w+)",
+      "measure": "m: (\\w+)",
+    },
+    "args": [
+      {
+        "name": "symbol",
+        "values": ["AAPL", "PLTR"],
+        "default": "AAPL"
+      },
+      {
+        "name": "date",
+        # Use range to autocomplete the dates of the last few days
+        "values":
+        "(0,5,1) -> strftime(\"%Y-%m-%d\", localtime() - v:val*24*60*60)"
+      },
+      {
+        "name": "measure",
+        "values": ["High", "Low", "Avg", "Volume"]
+      }
+    ]
+    # Example command
+    # python3 ~/StockCLI.py --symbol AAPL --date 2021-01-01 --statistic Avg
+  },
+  "Tool2: {
+    ...
+    # Info for Tool2
+    ...
+  }
+}
+<
 
 COMMANDS                                                         *vui-commands*
 ===============================================================================
@@ -50,7 +143,7 @@ VUISaveResults                                                *:VUISaveResults*
                     Save the results of the current vui buffer into a
                     user-specified file
 
-VUIParseArgsFromString              *:VUIParseArgsFromString*
+VUIParseArgsFromString                                *:VUIParseArgsFromString*
                     Parse the passed in string for arg values
                     and populate the vui buffer with them
                     Useful for copying ouput from another program
