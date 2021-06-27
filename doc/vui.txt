@@ -71,34 +71,40 @@ Example Configuration ~
 
 >
 {
-    # Config for StockCLI tool
-    "StockCLI": {
-        "description": "Look up statistics for stocks",
-        "command": "python  ~/StockCLI.py",
-        "parser": ___________________________________________________________________________________
-        "args": [
-            {
-                "name": "symbol",
-                "values": ["AAPL", "PLTR"],
-                "default": "AAPL"
-            },
-            {
-                "name": "date",
-                # Use range to autocomplete the dates of the last few days
-                "values": "(0,5,1) -> strftime(\"%Y-%m-%d\", localtime() - v:val*24*60*60)"
-            },
-            {
-                "name": "measure",
-                "values": ["High", "Low", "Avg", "Volume"]
-            }
-        ]
-        # Example command: python3 ~/StockCLI.py --symbol AAPL --date 2021-01-01 --statistic Avg
+# Config for StockCLI tool
+  "StockCLI": {
+    "description": "Look up statistics for stocks",
+    "command": "python  ~/StockCLI.py",
+    "parser": {
+      "symbol": "s: (\\w+)",
+      "date": "d: (\\w+)",
+      "measure": "m: (\\w+)",
     },
-    "Tool2: {
-        ...
-        # Info for Tool2
-        ...
-    }
+    "args": [
+      {
+        "name": "symbol",
+        "values": ["AAPL", "PLTR"],
+        "default": "AAPL"
+      },
+      {
+        "name": "date",
+        # Use range to autocomplete the dates of the last few days
+        "values":
+        "(0,5,1) -> strftime(\"%Y-%m-%d\", localtime() - v:val*24*60*60)"
+      },
+      {
+        "name": "measure",
+        "values": ["High", "Low", "Avg", "Volume"]
+      }
+    ]
+    # Example command
+    # python3 ~/StockCLI.py --symbol AAPL --date 2021-01-01 --statistic Avg
+  },
+  "Tool2: {
+    ...
+    # Info for Tool2
+    ...
+  }
 }
 <
 
