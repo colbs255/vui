@@ -50,9 +50,9 @@ an object containing information about the tool. Each tool has these fields:
 - `command`: the actual command to run
 - `args`: list of objects describing the args for the tool (see next section)
 - `parser`: Map of arg-names to regular expressions that are used to extract
-arg values from a passed in string. If a match is found, whatever is in the
-first capture group will be used to populate the argument values.
-See |:VUIParseArgsFromString|
+    arg values from a passed in string. If a match is found, whatever is in
+    the first capture group will be used to populate the argument values.
+    See |:VUIParseArgsFromString|
 
 Tool Arguments Configuration ~
 
@@ -66,6 +66,16 @@ if the type is not specified then the arg will be treated as a string
 For each arg, specify the values used for completion via a list in `values`
 and a default value with `default`
 - If no default is specified then `_disabled_` will be used
+- If the values entry is a string, then vui will assume the string is a file
+    and read the arguments from the file, treating each line as an arg value
+- Basic lambdas can also be specified to generate arguments with a syntax
+    similar to python list comprehensions. The syntax is
+    >
+    (rangeStart, rangeStep, step) -> exression
+    <
+    Where endValue startValue is inclusive and rangeStep is exclusive
+    Expression should contain v:val for the value generated from the range
+    See the example configuration below for an example
 
 Example Configuration ~
 
